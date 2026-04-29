@@ -19,7 +19,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       home: MultiProvider(providers: [
         ChangeNotifierProvider(create: (_)=>BottomNavProvider(),)
-      ],child: BottomScreen(),),
+      ],
+        child: BottomScreen(),),
     );
 
   }
