@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/ui/Register/Register.dart';
-import 'package:todolist/ui/login/login.dart';
+import 'package:todolist/view/Register.dart';
+import 'package:todolist/view/login.dart';
 
 class WelcomeTodo extends StatefulWidget {
   const WelcomeTodo({super.key});

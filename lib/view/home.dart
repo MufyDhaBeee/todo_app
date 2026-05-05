@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todolist/ui/bottom_nav/bottom_nav_provider.dart';
-import 'package:todolist/ui/welcome/welcome_todo.dart';
+import 'package:todolist/view/welcome_todo.dart';
+import 'package:todolist/viewmodel/bottom_nav_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<BottomNavProvider>(
       builder: (context,bottom,child) {
+        print("dsgkldfj");
         return Scaffold(
           backgroundColor: Colors.black,
           appBar: AppBar(

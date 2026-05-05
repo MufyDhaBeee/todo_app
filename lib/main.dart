@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todolist/ui/bottom_nav/bottom_nav_bar.dart';
-import 'package:todolist/ui/bottom_nav/bottom_nav_provider.dart';
-import 'package:todolist/ui/welcome/profile_page.dart';
-import 'package:todolist/ui/welcome/welcome_todo.dart';
+import 'package:todolist/view/bottom_nav_bar.dart';
+import 'package:todolist/viewmodel/bottom_nav_provider.dart';
 
 
 void main() {
@@ -17,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MultiProvider(providers: [
         ChangeNotifierProvider(create: (_)=>BottomNavProvider(),)
       ],

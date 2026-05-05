@@ -1,25 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/ui/Register/Register.dart';
-import 'package:todolist/ui/home/home.dart';
+import 'package:todolist/view/home.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class Register extends StatefulWidget {
+  const Register({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<Register> createState() => _RegisterState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegisterState extends State<Register> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return  Scaffold(
       backgroundColor: Colors.black,
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: IconButton(onPressed:(){
           Navigator.pop(context);
         },
-            icon: Icon(Icons.arrow_back_ios_sharp, color: Color.fromRGBO(255, 255, 255, 1),),
+          icon: Icon(Icons.arrow_back_ios_sharp, color: Color.fromRGBO(255, 255, 255, 1),),
         ),
       ),
       body: SingleChildScrollView(
@@ -31,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Login',
+                    'Register',
                     style: TextStyle(
                       fontWeight: FontWeight.w700,
                       color: Color.fromRGBO(255, 255, 255, 0.87),
@@ -67,7 +66,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  SizedBox(height: 25),
                   //password
                   Text(
                     'Password',
@@ -95,9 +94,37 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
+                  SizedBox(height: 25),
 
+                  //confirm password
+                  Text(
+                    'Confirm Password',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      color: Color.fromRGBO(255, 255, 255, 0.87),
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Container(
+                    height: 55,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.black,
+                      border: Border.all(
+                        color: Color.fromRGBO(151, 151, 151, 1),
+                        width: 2,
+                      ),
+                    ),
+                    child: TextFormField(
+                      decoration:  InputDecoration(
+                        hintText: "••••••••••••",
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
                   //login button
-                  SizedBox(height: 100),
+                  SizedBox(height: 50),
                   InkWell(
                     onTap: (){
                       Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
@@ -110,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       child: Center(
                         child: Text(
-                          'Login',
+                          'Register',
                           style: TextStyle(
                             color: Color.fromRGBO(255, 255, 255, 1),
                             fontSize: 16,
@@ -120,7 +147,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 45),
                   // Divider with "or"
                   Row(
                     children: [
@@ -167,8 +194,8 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Image.asset('assets/icons/google2.png',height: 24, width: 24,),
                         SizedBox(width: 10,),
-                        Text('Login with Google', style: TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 0.87), fontSize: 16
+                        Text('Register with Google', style: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.87), fontSize: 16
                         ),),
                       ],
                     ),
@@ -188,15 +215,16 @@ class _LoginPageState extends State<LoginPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                         Image.asset('assets/icons/apple.png',height: 25, width: 25,),
+                        Image.asset('assets/icons/apple.png',height: 25, width: 25,),
                         SizedBox(width: 5,),
-                        Text('Login with Appe', style: TextStyle(
+                        Text('Register with Appe', style: TextStyle(
                           color: Color.fromRGBO(255, 255, 255, 0.87),
+                          fontSize: 16,
                         ),),
                       ],
                     ),
                   ),
-                  SizedBox(height: 55,),
+                  SizedBox(height: 70,),
                   Center(
                     child: InkWell(
                       onTap: () {
@@ -204,12 +232,12 @@ class _LoginPageState extends State<LoginPage> {
                       },
                       child: RichText(
                           text: TextSpan(
-                            style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w400,),
-                            children: [
-                                TextSpan(text: 'Don’t have an account? ', style: TextStyle(color: Color.fromRGBO(131, 129, 129, 0.8705882352941177))),
-                                TextSpan(text: 'Register', style: TextStyle(color: Colors.white70)),
-                            ]
+                              style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w400,),
+                              children: [
+                                TextSpan(text: 'Already have an account?', style: TextStyle(color: Color.fromRGBO(131, 129, 129, 0.8705882352941177))),
+                                TextSpan(text: 'Login', style: TextStyle(color: Colors.white70)),
+                              ]
                           )
                       ),
                     ),
@@ -222,6 +250,7 @@ class _LoginPageState extends State<LoginPage> {
           ],
         ),
       ),
+
     );
   }
 }
