@@ -17,8 +17,8 @@ class BottomScreen extends StatefulWidget {
 class _BottomScreenState extends State<BottomScreen> {
   List<Widget>screens=[
     HomeScreen(),
-    FocusPage(),
     Calender(),
+    FocusPage(),
     ProfilePage(),
 
   ];
