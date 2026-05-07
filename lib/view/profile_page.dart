@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todolist/view/common_widget.dart';
+import 'package:todolist/view/settings.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -63,7 +64,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 icon: Icons.settings,
                 title: 'App Settings',
                 ontap: (){
-                }),
+                  //nav to new Page
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) {
+                      return Settings();
+                    },
+                  ));
+                },),
             SizedBox(height: 15,),
             SectionLabel(label: 'Account'),
             ProfileMenuItem(
