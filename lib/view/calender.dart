@@ -178,7 +178,7 @@ class _CalenderState extends State<Calender> {
           ),
           //--------------------------------Task Card------------------------------------>
           Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(12.0),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
@@ -304,7 +304,7 @@ class PriorityBadge extends StatelessWidget {
       
         borderRadius: BorderRadius.circular(4),
         border: Border.all(
-          width: 1,
+          width: 2,
             color:Color.fromRGBO(134, 135, 231, 1)),
       ),
       child: Row(

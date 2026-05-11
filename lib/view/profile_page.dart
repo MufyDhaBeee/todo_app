@@ -77,6 +77,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 icon: Icons.person,
                 title: 'Change account name',
                 ontap: (){
+
+showMyDialog(context);
                 }
             ),
             ProfileMenuItem(
@@ -125,4 +127,96 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+
+//----------------------------Alert Dialog Settings---> change Account---------------------------->
+void showMyDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // User must tap a button to close
+    builder: (BuildContext context) {
+      return
+      Center(
+        child: Container(
+          height: 200,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(54, 54, 54, 1),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Column(
+            children: [
+              Text('Change account name', style: TextStyle(
+                fontWeight: FontWeight.w700,
+                fontSize: 16,
+                color: Color.fromRGBO(255, 255, 255, 0.87),
+              ),),
+              SizedBox(height: 4,),
+              Divider(
+                color: Color.fromRGBO(151, 151, 151, 1),
+                indent: 10,
+                endIndent: 10,
+              ),
+              SizedBox(
+                height: 15,
+              ),
+              Container(
+                height: 43,
+                width: 300,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4),
+                  border: Border.all(
+                    color: Color.fromRGBO(151, 151, 151, 1),
+                  )
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                         color:  Color.fromRGBO(153, 153, 153, 1),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Center(child: Text('Cancel', style: TextStyle(
+                        color:  Color.fromRGBO(134, 135, 231, 1),
+                        fontWeight: FontWeight.w400,
+                        fontSize: 16,
+                      ),)),
+                    ),
+                    SizedBox(width: 10,),
+                    Container(
+                      height: 50,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          color:  Color.fromRGBO(134, 135, 231, 1),
+                          borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Center(child: Text('Edit', style: TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 1)
+                      ),)),
+                    ),
+                  ],
+                ),
+              )
+
+            ],
+          ),
+
+
+
+
+        ),
+      );
+
+    },
+  );
+}
+
+
 

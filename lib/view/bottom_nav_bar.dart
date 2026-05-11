@@ -25,29 +25,50 @@ class _BottomScreenState extends State<BottomScreen> {
   int current_index = 0;
   @override
   Widget build(BuildContext context) {
+    void onItemTapped(int index) {
+      setState(() {
+        current_index = index;
+      });
+    }
+
     return  Scaffold(
         body: screens[current_index],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
-          onTap: (num){
-            print("current index$num");
-            current_index=num;
-            setState(() {
-            });
-          },
+          // onTap: (num){
+          //   print("current index$num");
+          //   current_index=num;
+          //   setState(() {
+          //   });
+          // },
+         onTap:  onItemTapped,
+          currentIndex: current_index,
           backgroundColor: Color.fromRGBO(54, 54, 54, 1),
-          selectedItemColor: Color.fromRGBO(255, 255,255,1),
+          selectedItemColor: Color.fromRGBO(134, 135, 231, 1),
           unselectedItemColor: Color.fromRGBO(255, 255, 255, 0.87),
-          selectedLabelStyle: TextStyle(
-            color: Color.fromRGBO(15, 87, 0, 1),
-          ),
+
+
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.calendar_month),label: 'Calender'),
             BottomNavigationBarItem(icon: Icon(Icons.access_time_filled),label: 'Focus'),
             BottomNavigationBarItem(icon: Icon(Icons.person),label: 'Profile'),
 
-          ],)
-    );
+          ],),
+
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+            child: Icon(Icons.add),
+            backgroundColor: Color.fromRGBO(134, 135, 231, 1),
+            foregroundColor: Color.fromRGBO(255, 255, 255, 1),
+          shape: const CircleBorder(),
+            onPressed: () {
+              setState(() {
+
+              });
+            },
+        ),
+
+              );
   }
 }
