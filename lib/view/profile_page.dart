@@ -54,73 +54,70 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
             ),
-            SizedBox(height: 15,),
+            SizedBox(height: 15),
             //------Task Section-------------------------------------------->
             Row(children: [TaskSection(), TaskSection()]),
-            SizedBox(height: 30,),
+            SizedBox(height: 30),
             //-----------Setting Section---------------------------------------->
-            SectionLabel(label: 'Settings',),
+            SectionLabel(label: 'Settings'),
             ProfileMenuItem(
-                icon: Icons.settings,
-                title: 'App Settings',
-                ontap: (){
-                  //nav to new Page
-                  Navigator.of(context).push(MaterialPageRoute(
+              icon: Icons.settings,
+              title: 'App Settings',
+              ontap: () {
+                //nav to new Page
+                Navigator.of(context).push(
+                  MaterialPageRoute(
                     builder: (context) {
                       return Settings();
                     },
-                  ));
-                },),
-            SizedBox(height: 15,),
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: 15),
             SectionLabel(label: 'Account'),
             ProfileMenuItem(
-                icon: Icons.person,
-                title: 'Change account name',
-                ontap: (){
-
-showMyDialog(context);
-                }
+              icon: Icons.person,
+              title: 'Change account name',
+              ontap: () {
+                showChangeAccountNameDialog(context);
+              },
             ),
             ProfileMenuItem(
-                icon: Icons.key,
-                title: 'Change account password',
-                ontap: (){
-                },
+              icon: Icons.key,
+              title: 'Change account password',
+              ontap: () {
+                showChangeAccountPasswordDialog(context);
+              },
             ),
             ProfileMenuItem(
-                icon: Icons.camera_alt,
-                title: 'Change account image',
-                ontap: (){}
+              icon: Icons.camera_alt,
+              title: 'Change account image',
+              ontap: () {},
             ),
-            SizedBox(height: 15,),
+            SizedBox(height: 15),
             SectionLabel(label: 'Uptodo'),
             ProfileMenuItem(
-                icon: Icons.apps_sharp,
-                title: 'About Us',
-                ontap: (){
-                }),
-            ProfileMenuItem(
-                icon: Icons.info_rounded,
-                title: 'FAQ',
-                ontap: (){}
+              icon: Icons.apps_sharp,
+              title: 'About Us',
+              ontap: () {},
             ),
             ProfileMenuItem(
-                icon: Icons.help_outlined,
-                title: 'help & Feedback',
-                ontap: (){}),
+              icon: Icons.info_rounded,
+              title: 'FAQ',
+              ontap: () {},
+            ),
             ProfileMenuItem(
-                icon: Icons.thumb_up_outlined,
-                title: 'Support US',
-                ontap: (){}),
-            logOutMenuItem(
-              icon: Icons.logout,
-              title: 'Log out',
-              ontap: () {  },)
-
-
-
-
-
+              icon: Icons.help_outlined,
+              title: 'help & Feedback',
+              ontap: () {},
+            ),
+            ProfileMenuItem(
+              icon: Icons.thumb_up_outlined,
+              title: 'Support US',
+              ontap: () {},
+            ),
+            logOutMenuItem(icon: Icons.logout, title: 'Log out', ontap: () {}),
           ],
         ),
       ),
@@ -128,95 +125,248 @@ showMyDialog(context);
   }
 }
 
-//----------------------------Alert Dialog Settings---> change Account---------------------------->
-void showMyDialog(BuildContext context) {
+///----------------------------Alert Dialog Settings---> change Account---------------------------->
+void showChangeAccountNameDialog(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: false, // User must tap a button to close
     builder: (BuildContext context) {
       return
-      Center(
-        child: Container(
-          height: 200,
-          decoration: BoxDecoration(
-            color: Color.fromRGBO(54, 54, 54, 1),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          child: Column(
-            children: [
-              Text('Change account name', style: TextStyle(
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-                color: Color.fromRGBO(255, 255, 255, 0.87),
-              ),),
-              SizedBox(height: 4,),
-              Divider(
-                color: Color.fromRGBO(151, 151, 151, 1),
-                indent: 10,
-                endIndent: 10,
+      Material(
+        color: Colors.transparent,
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(left: 25, right: 25),
+            child: Container(
+              height: 200,
+              decoration: BoxDecoration(
+                color: Color.fromRGBO(54, 54, 54, 1),
+                borderRadius: BorderRadius.circular(4),
               ),
-              SizedBox(
-                height: 15,
-              ),
-              Container(
-                height: 43,
-                width: 300,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  border: Border.all(
+              child: Column(
+                children: [
+                  Text('Change account name', style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                    color: Color.fromRGBO(255, 255, 255, 0.87),
+                  ),),
+                  SizedBox(height: 4,),
+                  Divider(
                     color: Color.fromRGBO(151, 151, 151, 1),
+                    indent: 10,
+                    endIndent: 10,
+                  ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    height: 45,
+                    width: 320,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(
+                        color: Color.fromRGBO(151, 151, 151, 1),
+                      )
+                    ),
+                      child: TextField(
+                        decoration: InputDecoration(
+                          hintText: '  Martha Hays',
+                          hintStyle: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.w400,
+                            color: Color.fromRGBO(255, 255, 255, 0.87),
+                          )
+                        ),
+                      ),
+                    ),
+                  SizedBox(
+                    height: 25,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 53,
+                          width: 150,
+                          decoration: BoxDecoration(
+                             color:   Color.fromRGBO(54, 54, 54, 1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Center(child: Text('Cancel', style: TextStyle(
+                            color:  Color.fromRGBO(134, 135, 231, 1),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                          ),)),
+                        ),
+                        SizedBox(width: 15,),
+                        Container(
+                          height: 53,
+                          width: 150,
+                          decoration: BoxDecoration(
+                              color:  Color.fromRGBO(134, 135, 231, 1),
+                              borderRadius: BorderRadius.circular(4),
+                          ),
+                          child: Center(child: Text('Edit', style: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 1)
+                          ),)),
+                        ),
+                      ],
+                    ),
                   )
-                ),
+                ],
               ),
-              SizedBox(
-                height: 20,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                         color:  Color.fromRGBO(153, 153, 153, 1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Center(child: Text('Cancel', style: TextStyle(
-                        color:  Color.fromRGBO(134, 135, 231, 1),
-                        fontWeight: FontWeight.w400,
-                        fontSize: 16,
-                      ),)),
-                    ),
-                    SizedBox(width: 10,),
-                    Container(
-                      height: 50,
-                      width: 100,
-                      decoration: BoxDecoration(
-                          color:  Color.fromRGBO(134, 135, 231, 1),
-                          borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Center(child: Text('Edit', style: TextStyle(
-                        color: Color.fromRGBO(255, 255, 255, 1)
-                      ),)),
-                    ),
-                  ],
-                ),
-              )
-
-            ],
+            ),
           ),
-
-
-
-
         ),
       );
-
     },
   );
 }
 
+///---------------Change Account Password------------------------------------------------------------------------>>>
+///
 
+void showChangeAccountPasswordDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // User must tap a button to close
+    builder: (BuildContext context) {
+      return
+        Material(
+          color: Colors.transparent,
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 25, right: 25),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(54, 54, 54, 1),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10,),
+                    Text('Change account password', style: TextStyle(
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                      color: Color.fromRGBO(255, 255, 255, 0.87),
+                    ),),
+                    SizedBox(height: 4,),
+                    Divider(
+                      color: Color.fromRGBO(151, 151, 151, 1),
+                      indent: 10,
+                      endIndent: 10,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    /////-------Password----------------------------------------------------------->>
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Enter old password', style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(255, 255, 255, 0.87),
+                        ),),
+                        SizedBox(height: 10,),
+                        Container(
+                          height: 48,
+                          width: 287,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(
+                                color: Color.fromRGBO(151, 151, 151, 1),
+                              )
+                          ),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: '  ● ● ● ● ● ● ●',
+                                hintStyle: TextStyle(
+                                  fontSize: 6,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromRGBO(255, 255, 255, 0.87),
+                                )
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: 15,),
+                        Text('Enter new password', style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color.fromRGBO(255, 255, 255, 0.87),
+                        ),),
+                        SizedBox(height: 10,),
+                        Container(
+                          height: 48,
+                          width: 287,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              border: Border.all(
+                                color: Color.fromRGBO(151, 151, 151, 1),
+                              )
+                          ),
+                          child: TextField(
+                            decoration: InputDecoration(
+                                hintText: '  ● ● ● ● ● ● ●',
+                                hintStyle: TextStyle(
+                                  fontSize: 6,
+                                  fontWeight: FontWeight.w400,
+                                  color: Color.fromRGBO(255, 255, 255, 0.87),
+                                )
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
+
+                    //----------------------------------------------------------------------------->
+                    SizedBox(
+                      height: 25,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 53,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color:   Color.fromRGBO(54, 54, 54, 1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(child: Text('Cancel', style: TextStyle(
+                              color:  Color.fromRGBO(134, 135, 231, 1),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                            ),)),
+                          ),
+                          SizedBox(width: 15,),
+                          Container(
+                            height: 53,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              color:  Color.fromRGBO(134, 135, 231, 1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(child: Text('Edit', style: TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 1)
+                            ),)),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+    },
+  );
+}
 
