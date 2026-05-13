@@ -1,5 +1,6 @@
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/viewmodel/bottom_nav_provider.dart';
 
@@ -160,7 +161,7 @@ class _FocusPageState extends State<FocusPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Applications',
+                      '  Applications',
                       style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
@@ -169,27 +170,27 @@ class _FocusPageState extends State<FocusPage> {
                     ),
                     SizedBox(height: 10),
                     AppUsageTile(
-                      image: Image.asset('assets/icons/instagram.svg'),
+                      image: SvgPicture.asset('assets/icons/instagram.svg'),
                       appName: 'Instagram',
                       usageText: 'You spent 4h on Instagram today',
                     ),
                     AppUsageTile(
-                      image: Image.asset('assets/icons/twitter.svg'),
+                      image: SvgPicture.asset('assets/icons/twitter.svg'),
                       appName: 'Twitter',
                       usageText: 'You spent 3h on Twitter today',
                     ),
                     AppUsageTile(
-                      image: Image.asset('assets/icons/Facebook.svg'),
+                      image: SvgPicture.asset('assets/icons/Facebook.svg'),
                       appName: 'Facebook',
                       usageText: 'You spent 1h on Facebbok today',
                     ),
                     AppUsageTile(
-                      image: Image.asset('assets/icons/telegram.svg'),
+                      image: SvgPicture.asset('assets/icons/telegram.svg'),
                       appName: 'Telegram',
                       usageText: 'You spent 30m on Telegram today',
                     ),
                     AppUsageTile(
-                      image: Image.asset('assets/icons/gmail.svg'),
+                      image: SvgPicture.asset('assets/icons/gmail.svg'),
                       appName: 'Gmail',
                       usageText: 'You spent 45m on Gmail today',
                     ),
@@ -211,50 +212,50 @@ class WeeklyOverviewGraph extends StatelessWidget {
   Widget build(BuildContext context) {
     // Data: hours per day (SUN to SAT)
     // SUN=2.5, MON=3.5, TUE=5.0, WED=3.0, THU=4.0, FRI=4.5, SAT=2.0
-    final List<_BarData> data = [
-      _BarData(
+    final List<BarData> data = [
+      BarData(
         day: 'SUN',
         hours: 2.5,
         label: '2h30m',
         isHighlighted: false,
         isToday: false,
       ),
-      _BarData(
+      BarData(
         day: 'MON',
         hours: 3.5,
         label: '3h30m',
         isHighlighted: false,
         isToday: false,
       ),
-      _BarData(
+      BarData(
         day: 'TUE',
         hours: 5.0,
         label: '5H',
         isHighlighted: false,
         isToday: false,
       ),
-      _BarData(
+      BarData(
         day: 'WED',
         hours: 3.0,
         label: '3h',
         isHighlighted: false,
         isToday: false,
       ),
-      _BarData(
+      BarData(
         day: 'THU',
         hours: 4.0,
         label: '4h',
         isHighlighted: false,
         isToday: false,
       ),
-      _BarData(
+      BarData(
         day: 'FRI',
         hours: 4.5,
         label: '4h30m',
         isHighlighted: true,
         isToday: false,
       ),
-      _BarData(
+      BarData(
         day: 'SAT',
         hours: 2.0,
         label: '2h',
@@ -390,14 +391,14 @@ class WeeklyOverviewGraph extends StatelessWidget {
   }
 }
 
-class _BarData {
+class BarData {
   final String day;
   final double hours;
   final String label;
   final bool isHighlighted;
   final bool isToday;
 
-  const _BarData({
+  const BarData({
     required this.day,
     required this.hours,
     required this.label,
@@ -421,63 +422,66 @@ class AppUsageTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: const Color(0xFF2C2C2C),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          // Left: Icon + Text
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-              child: Row(
-                children: [
-                  image,
-                  const SizedBox(width: 14),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        appName,
-                        style: const TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 1),
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
+    return Padding(
+      padding: const EdgeInsets.only(left: 12, right: 12, top: 10, bottom: 10),
+      child: Container(
+        decoration: BoxDecoration(
+          color: const Color.fromRGBO(76, 76, 76, 1),
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Row(
+          children: [
+            // Left: Icon + Text
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+                child: Row(
+                  children: [
+                    image,
+                    const SizedBox(width: 14),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          appName,
+                          style: const TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 3),
-                      Text(
-                        usageText,
-                        style: const TextStyle(
-                          color: Color.fromRGBO(255, 255, 225, 1),
-                          fontSize: 12,
-                          fontWeight: FontWeight.w400,
+                        const SizedBox(height: 3),
+                        Text(
+                          usageText,
+                          style: const TextStyle(
+                            color: Color.fromRGBO(255, 255, 225, 1),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          // Divider
-          Container(
-            width: 2,
-            height: 50,
-            color: const Color.fromRGBO(151, 151, 151, 1),
-          ),
-          // Right: Warning icon
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Icon(
-              Icons.error_outline,
-              color: Color.fromRGBO(255, 255, 255, 0.87),
-              size: 21.5,
+            // Divider
+            Container(
+              width: 2,
+              height: 50,
+              color: const Color.fromRGBO(151, 151, 151, 1),
             ),
-          ),
-        ],
+            // Right: Warning icon
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Icon(
+                Icons.error_outline,
+                color: Color.fromRGBO(255, 255, 255, 0.87),
+                size: 21.5,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.1.5+1
   circular_countdown_timer: ^0.2.4
   horizontal_week_calendar: ^0.0.20
+  flutter_svg: ^2.3.0
 
 dev_dependencies:
   flutter_test:

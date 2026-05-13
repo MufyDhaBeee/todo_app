@@ -99,3 +99,107 @@ class logOutMenuItem extends StatelessWidget {
     );
   }
 }
+// ─── Toolbar row ──────────────────────────────────────────────────────────────
+
+class ToolbarRow extends StatelessWidget {
+  const ToolbarRow();
+
+  @override
+  Widget build(BuildContext context) {
+
+
+    return Row(
+      children: [
+        ToolbarIconButton(icon: Icons.timer_outlined, onTap: () {}),
+        const SizedBox(width: 18),
+        ToolbarIconButton(icon: Icons.sell_outlined, onTap: () {}),
+        const SizedBox(width: 18),
+        ToolbarIconButton(icon: Icons.flag_outlined, onTap: () {}),
+        const Spacer(),
+        // Send button
+        GestureDetector(
+          onTap: () {
+    // final p = context.read<AddTaskProvider>();
+    // if (p.step == 1) {
+    // p.submitTitle();
+    // } else {
+    // p.submitTask(context);
+    // }
+    },
+          child: Container(
+            padding: const EdgeInsets.all(8),
+            child: const Icon(
+              Icons.send,
+              color: Color(0xFF7B6EF6),
+              size: 24,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
+// ─── Reusable Task Text Field ─────────────────────────────────────────────────
+
+class TaskTextField extends StatelessWidget {
+  const TaskTextField({
+    super.key,
+    required this.controller,
+    required this.focusNode,
+    required this.hintText,
+    required this.onSubmitted,
+  });
+
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final String hintText;
+  final ValueChanged<String> onSubmitted;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        color: const Color(0xFF2C2C2E),
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: const Color(0xFF3A3A3C), width: 0.8),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
+      child: TextField(
+        controller: controller,
+        focusNode: focusNode,
+        onSubmitted: onSubmitted,
+        style: const TextStyle(color: Colors.white, fontSize: 16),
+        cursorColor: Colors.white,
+        decoration: InputDecoration(
+          hintText: hintText,
+          hintStyle: const TextStyle(color: Colors.white38, fontSize: 16),
+          border: InputBorder.none,
+          isDense: true,
+          contentPadding: const EdgeInsets.symmetric(vertical: 10),
+        ),
+      ),
+    );
+  }
+}
+
+/// A tappable icon button used in the toolbar.
+class ToolbarIconButton extends StatelessWidget {
+  const ToolbarIconButton({
+    super.key,
+    required this.icon,
+    required this.onTap,
+  });
+
+  final IconData icon;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Icon(icon, color: Colors.white54, size: 22),
+    );
+  }
+}

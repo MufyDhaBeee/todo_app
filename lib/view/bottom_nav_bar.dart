@@ -63,6 +63,7 @@ class _BottomScreenState extends State<BottomScreen> {
             foregroundColor: Color.fromRGBO(255, 255, 255, 1),
           shape: const CircleBorder(),
             onPressed: () {
+              showAddTaskDialog(context);
               setState(() {
 
               });
