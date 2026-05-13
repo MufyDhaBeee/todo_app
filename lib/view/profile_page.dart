@@ -93,7 +93,9 @@ class _ProfilePageState extends State<ProfilePage> {
             ProfileMenuItem(
               icon: Icons.camera_alt,
               title: 'Change account image',
-              ontap: () {},
+              ontap: () {
+                showCustomBottomSheet(context);
+              },
             ),
             SizedBox(height: 15),
             SectionLabel(label: 'Uptodo'),
@@ -226,7 +228,7 @@ void showChangeAccountNameDialog(BuildContext context) {
 }
 
 ///---------------Change Account Password------------------------------------------------------------------------>>>
-///
+
 
 void showChangeAccountPasswordDialog(BuildContext context) {
   showDialog(
@@ -240,6 +242,7 @@ void showChangeAccountPasswordDialog(BuildContext context) {
             child: Padding(
               padding: const EdgeInsets.only(left: 25, right: 25),
               child: Container(
+                height: 350,
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(54, 54, 54, 1),
                   borderRadius: BorderRadius.circular(4),
@@ -271,7 +274,7 @@ void showChangeAccountPasswordDialog(BuildContext context) {
                           fontWeight: FontWeight.w400,
                           color: Color.fromRGBO(255, 255, 255, 0.87),
                         ),),
-                        SizedBox(height: 10,),
+                       SizedBox(height: 10,),
                         Container(
                           height: 48,
                           width: 287,
@@ -283,9 +286,9 @@ void showChangeAccountPasswordDialog(BuildContext context) {
                           ),
                           child: TextField(
                             decoration: InputDecoration(
-                                hintText: '  ● ● ● ● ● ● ●',
+                                hintText: ' ******',
                                 hintStyle: TextStyle(
-                                  fontSize: 6,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w400,
                                   color: Color.fromRGBO(255, 255, 255, 0.87),
                                 )
@@ -298,7 +301,7 @@ void showChangeAccountPasswordDialog(BuildContext context) {
                           fontWeight: FontWeight.w400,
                           color: Color.fromRGBO(255, 255, 255, 0.87),
                         ),),
-                        SizedBox(height: 10,),
+                       SizedBox(height: 10,),
                         Container(
                           height: 48,
                           width: 287,
@@ -310,9 +313,9 @@ void showChangeAccountPasswordDialog(BuildContext context) {
                           ),
                           child: TextField(
                             decoration: InputDecoration(
-                                hintText: '  ● ● ● ● ● ● ●',
+                                hintText: ' ******',
                                 hintStyle: TextStyle(
-                                  fontSize: 6,
+                                  fontSize: 15,
                                   fontWeight: FontWeight.w400,
                                   color: Color.fromRGBO(255, 255, 255, 0.87),
                                 )
@@ -322,7 +325,6 @@ void showChangeAccountPasswordDialog(BuildContext context) {
 
                       ],
                     ),
-
                     //----------------------------------------------------------------------------->
                     SizedBox(
                       height: 25,
@@ -369,4 +371,83 @@ void showChangeAccountPasswordDialog(BuildContext context) {
     },
   );
 }
+///--------------------Change Account Image----------------------------------------------------------------->
+///
+///
+
+void showCustomBottomSheet (BuildContext context) {
+  showModalBottomSheet(
+    context : context,
+    isDismissible: true,
+    backgroundColor: Colors.transparent,
+    builder: (context) => CustomBottomSheet(),
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    )
+  );
+}
+
+//---------------customBottomSheet----------------------------------------------------->
+class CustomBottomSheet extends StatelessWidget {
+  const CustomBottomSheet({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return  Container(
+      height: 250,
+      padding: EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(54, 54, 54, 1),
+        borderRadius: BorderRadius.only(
+          topLeft:  Radius.circular(4),
+          topRight: Radius.circular(4),
+        ),
+      ),
+      child: Column(
+        children: [
+          Text('Change account Image', style: TextStyle(
+            color: Color.fromRGBO(255, 255, 255, 0.87),
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),),
+          Divider(
+            color: Color.fromRGBO(151, 151, 151, 1),
+            indent: 15,
+            endIndent: 15,
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          ListTile(
+            title: Text('Take picture', style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+              color: Color.fromRGBO(255, 255, 255, 0.87),
+            ),),
+            onTap: (){
+            },
+          ),
+          ListTile(
+            title: Text('Import from gallery', style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+              color: Color.fromRGBO(255, 255, 255, 0.87),
+            ),),
+          ),
+          ListTile(
+            title: Text('Import from Google Drive', style: TextStyle(
+              fontWeight: FontWeight.w400,
+              fontSize: 16,
+              color: Color.fromRGBO(255, 255, 255, 0.87),
+            ),),
+          ),
+
+        ],
+      ),
+    );
+  }
+}
+
+
+
 
