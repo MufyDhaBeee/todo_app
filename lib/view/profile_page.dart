@@ -189,18 +189,23 @@ void showChangeAccountNameDialog(BuildContext context) {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          height: 53,
-                          width: 150,
-                          decoration: BoxDecoration(
-                             color:   Color.fromRGBO(54, 54, 54, 1),
-                            borderRadius: BorderRadius.circular(4),
+                        InkWell(
+                          onTap:(){
+                            Navigator.pop(context);
+                          },
+                          child: Container(
+                            height: 53,
+                            width: 150,
+                            decoration: BoxDecoration(
+                               color:   Color.fromRGBO(54, 54, 54, 1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(child: Text('Cancel', style: TextStyle(
+                              color:  Color.fromRGBO(134, 135, 231, 1),
+                              fontWeight: FontWeight.w400,
+                              fontSize: 16,
+                            ),)),
                           ),
-                          child: Center(child: Text('Cancel', style: TextStyle(
-                            color:  Color.fromRGBO(134, 135, 231, 1),
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                          ),)),
                         ),
                         SizedBox(width: 15,),
                         Container(
@@ -334,18 +339,23 @@ void showChangeAccountPasswordDialog(BuildContext context) {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Container(
-                            height: 53,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              color:   Color.fromRGBO(54, 54, 54, 1),
-                              borderRadius: BorderRadius.circular(4),
+                          InkWell(
+                            onTap: (){
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 53,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color:   Color.fromRGBO(54, 54, 54, 1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(child: Text('Cancel', style: TextStyle(
+                                color:  Color.fromRGBO(134, 135, 231, 1),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                              ),)),
                             ),
-                            child: Center(child: Text('Cancel', style: TextStyle(
-                              color:  Color.fromRGBO(134, 135, 231, 1),
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                            ),)),
                           ),
                           SizedBox(width: 15,),
                           Container(

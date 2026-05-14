@@ -49,7 +49,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
 
-                  SvgPicture.asset('assets/icons/timer.svg'),
                   Container(
                     height: 250,
                     width: 250,
@@ -228,3 +227,4 @@ void showAddTaskDescriptionDialog(BuildContext context) {
     },
   );
 }
+
