@@ -403,46 +403,48 @@ class CustomBottomSheet extends StatelessWidget {
           topRight: Radius.circular(4),
         ),
       ),
-      child: Column(
-        children: [
-          Text('Change account Image', style: TextStyle(
-            color: Color.fromRGBO(255, 255, 255, 0.87),
-            fontSize: 16,
-            fontWeight: FontWeight.w700,
-          ),),
-          Divider(
-            color: Color.fromRGBO(151, 151, 151, 1),
-            indent: 15,
-            endIndent: 15,
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          ListTile(
-            title: Text('Take picture', style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text('Change account Image', style: TextStyle(
               color: Color.fromRGBO(255, 255, 255, 0.87),
-            ),),
-            onTap: (){
-            },
-          ),
-          ListTile(
-            title: Text('Import from gallery', style: TextStyle(
-              fontWeight: FontWeight.w400,
               fontSize: 16,
-              color: Color.fromRGBO(255, 255, 255, 0.87),
+              fontWeight: FontWeight.w700,
             ),),
-          ),
-          ListTile(
-            title: Text('Import from Google Drive', style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              color: Color.fromRGBO(255, 255, 255, 0.87),
-            ),),
-          ),
+            Divider(
+              color: Color.fromRGBO(151, 151, 151, 1),
+              indent: 15,
+              endIndent: 15,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            ListTile(
+              title: Text('Take picture', style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                color: Color.fromRGBO(255, 255, 255, 0.87),
+              ),),
+              onTap: (){
+              },
+            ),
+            ListTile(
+              title: Text('Import from gallery', style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                color: Color.fromRGBO(255, 255, 255, 0.87),
+              ),),
+            ),
+            ListTile(
+              title: Text('Import from Google Drive', style: TextStyle(
+                fontWeight: FontWeight.w400,
+                fontSize: 16,
+                color: Color.fromRGBO(255, 255, 255, 0.87),
+              ),),
+            ),
 
-        ],
+          ],
+        ),
       ),
     );
   }

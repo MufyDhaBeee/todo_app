@@ -47,7 +47,6 @@ class _BottomScreenState extends State<BottomScreen> {
           selectedItemColor: Color.fromRGBO(134, 135, 231, 1),
           unselectedItemColor: Color.fromRGBO(255, 255, 255, 0.87),
 
-
           items: [
             BottomNavigationBarItem(icon: Icon(Icons.home),label: 'Home'),
             BottomNavigationBarItem(icon: Icon(Icons.calendar_month),label: 'Calender'),
