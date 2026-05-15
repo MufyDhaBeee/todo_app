@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
+import 'package:todolist/model/task_states.dart';
 import 'package:todolist/view/common_widget.dart';
 import 'package:todolist/view/welcome_todo.dart';
 import 'package:todolist/viewmodel/bottom_nav_provider.dart';
-import 'package:todolist/viewmodel/home_provider.dart';
+
+import '../viewmodel/home_provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Consumer<BottomNavProvider>(
-      builder: (context,bottom,child) {
+      builder: (context, bottom, child) {
         print("dsgkldfj");
         return Scaffold(
           backgroundColor: Colors.black,
@@ -48,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Container(
                     height: 250,
                     width: 250,
@@ -80,10 +81,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         );
-      }
+      },
     );
   }
 }
+
 ///-------------Add Task---------------------------------------------------------->>>
 
 void showAddTaskDialog(BuildContext context) {
@@ -91,81 +93,11 @@ void showAddTaskDialog(BuildContext context) {
     context: context,
     barrierDismissible: false, // User must tap a button to close
     builder: (BuildContext context) {
-      return
-        Provider<HomeProvider>(
-          create: (_)=>HomeProvider(),
-          builder: (context,child) {
-            return Material(
-              color: Colors.transparent,
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
-                  child: Container(
-                    height: 280,
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(54, 54, 54, 1),
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(15.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          textDirection: TextDirection.ltr,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(height: 10,),
-                            //---- Header-------------------------------------------------------------->>
-                            const Text(
-                              ' Add Task',
-                              style: TextStyle(
-                                color: Color.fromRGBO(255, 255, 255, 0.87),
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(height: 16),
-                            //---- Step 1: Title field  /  Step 2: Title as label -----------------------------------------------
-                            TaskTextField(
-                              controller: context.watch<HomeProvider>().titleController,
-                              focusNode:context.watch<HomeProvider>().titleFocus,
-                              hintText: 'Do math homework',
-                              onSubmitted: (String value) {  },
-                            ),
-                            SizedBox(height: 20),
-                            Text(' Description', style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 18,
-                              color: Color.fromRGBO(175, 175, 175, 1),
-                            ),),
-                            SizedBox(height: 35,),
-                            //---------ToolBar Icon---------------------------------------------------------------------------->
-                            ToolbarRow(),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          }
-        );
-    },
-  );
-}
-
-///---------------------Add Task(Desciption)---------------------------------------------------------->>>
-///
-void showAddTaskDescriptionDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    barrierDismissible: false, // User must tap a button to close
-    builder: (BuildContext context) {
-      return
-        Provider<HomeProvider>(
-            create: (_)=>HomeProvider(),
-            builder: (context,child) {
+      return Provider<HomeProvider>(
+        create: (_) => HomeProvider(),
+        builder: (context, child) {
+          return Consumer<HomeProvider>(
+            builder: (context, homeProvider, child) {
               return Material(
                 color: Colors.transparent,
                 child: Center(
@@ -185,7 +117,7 @@ void showAddTaskDescriptionDialog(BuildContext context) {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(height: 10,),
+                              SizedBox(height: 10),
                               //---- Header-------------------------------------------------------------->>
                               const Text(
                                 ' Add Task',
@@ -195,23 +127,55 @@ void showAddTaskDescriptionDialog(BuildContext context) {
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-
-                              //---- Step 1: Title field  /  Step 2: Title as label -----------------------------------------------
                               const SizedBox(height: 16),
-                              Text(' Do math homework', style: TextStyle(
-                                fontWeight: FontWeight.w400,
-                                fontSize: 18,
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                              ),),
-                              SizedBox(height: 20),
-                              TaskTextField(
-                                controller: context.watch<HomeProvider>().titleController,
-                                focusNode:context.watch<HomeProvider>().titleFocus,
-                                hintText: 'Do chapter 2 to 5 for next week',
-                                onSubmitted: (String value) {  },
-                              ),
+                              //---- Step 1: Title field  /  Step 2: Title as label -----------------------------------------------
+                              if (context.watch<HomeProvider>().task_state ==
+                                  task_states.task_title) ...[
+                                TaskTextField(
+                                  controller: context
+                                      .watch<HomeProvider>()
+                                      .titleController,
+                                  focusNode: context
+                                      .watch<HomeProvider>()
+                                      .titleFocus,
+                                  hintText: 'Do math homework',
+                                  onSubmitted: (String value) {
+                                    print("the task is compoleted");
+                                    if (value.isNotEmpty) {
+                                      print("done task");
+                                      homeProvider.task_state =
+                                          task_states.task_description;
+                                      print(homeProvider.titleController.text);
+                                      print(
+                                        context
+                                            .watch<HomeProvider>()
+                                            .task_state,
+                                      );
+                                    }
+                                  },
+                                ),
+                              ] else if (context
+                                      .watch<HomeProvider>()
+                                      .task_state ==
+                                  task_states.task_description) ...[
+                                Text(
+                                  context
+                                      .watch<HomeProvider>()
+                                      .titleController
+                                      .text,
+                                ),
+                              ],
 
-                              SizedBox(height: 35,),
+                              SizedBox(height: 20),
+                              Text(
+                                ' Description',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 18,
+                                  color: Color.fromRGBO(175, 175, 175, 1),
+                                ),
+                              ),
+                              SizedBox(height: 35),
                               //---------ToolBar Icon---------------------------------------------------------------------------->
                               ToolbarRow(),
                             ],
@@ -222,9 +186,116 @@ void showAddTaskDescriptionDialog(BuildContext context) {
                   ),
                 ),
               );
-            }
-        );
+            },
+          );
+        },
+      );
     },
   );
 }
 
+
+
+/// -------------------Task Priority----------------------------------------------------------------------------------->>>
+
+void showTaskPriorityDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // User must tap a button to close
+    builder: (BuildContext context) {
+      return Provider<HomeProvider>(
+        create: (_) => HomeProvider(),
+        builder: (context, child) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Container(
+                   height: 400,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 54, 54, 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
+                    // textDirection: TextDirection.ltr,
+                    // crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      // SizedBox(height: 10),
+                      //---- Header-------------------------------------------------------------->>
+                      const Text(
+                        ' Task Priority',
+                        style: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 0.87),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                       SizedBox(height: 5),
+                      // //------------------------------------------------------------------------------------
+                      Divider(
+                        color: Color.fromRGBO(151, 151, 151, 1),
+                        thickness: 1,
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      SizedBox(
+                        height: 300,
+                        width: 250,
+                        child: GridView.builder(
+                          itemCount: 10,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                            mainAxisSpacing: 5,
+                            crossAxisSpacing: 5
+                          ),
+                          itemBuilder: (context,index){
+                            return Container(
+                              width: 64,
+                              height: 64,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(4),
+                                color: Color.fromRGBO(39, 39, 39, 1),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: Column(
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/icons/flag.svg',
+                                    ),
+                                    Text(
+                                      index.toString(),
+                                      style: TextStyle(
+                                        color: Color.fromRGBO(
+                                          255,
+                                          255,
+                                          255,
+                                          0.87,
+                                        ),
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}

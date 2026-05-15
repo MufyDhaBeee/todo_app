@@ -114,12 +114,25 @@ class ToolbarRow extends StatelessWidget {
         const SizedBox(width: 20),
          ToolbarIconButton(image: SvgPicture.asset('assets/icons/tag.svg'), onTap: () {}),
         const SizedBox(width: 20),
-        ToolbarIconButton(image: SvgPicture.asset('assets/icons/flag.svg'), onTap: () {}),
+        ToolbarIconButton(image: SvgPicture.asset('assets/icons/flag.svg'), onTap: () {
+          showTaskPriorityDialog(context);
+        }),
         const Spacer(),
         // Send button
         GestureDetector(
           onTap: () {
-            CalenderDialogWidget();
+            // switch(index){
+            //   case 0:
+            //     showAddTaskDescriptionDialog(context);
+            //     index++
+            //         break;
+            //   case 2:
+            //     calendarPopip()
+            //         break
+            //   case 3:
+
+
+            //}
     },
           child: Container(
             padding: const EdgeInsets.all(8),
@@ -162,6 +175,7 @@ class TaskTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       child: TextField(
         controller: controller,
+
         focusNode: focusNode,
         onSubmitted: onSubmitted,
         style: const TextStyle(color: Colors.white, fontSize: 16),
@@ -198,25 +212,5 @@ class ToolbarIconButton extends StatelessWidget {
     );
   }
 }
-///--------------------------Calender---------------------------------------------------------------------------->
 
-class CalenderDialogWidget extends StatefulWidget {
-  const CalenderDialogWidget({super.key});
 
-  @override
-  State<CalenderDialogWidget> createState() => _CalenderDialogWidgetState();
-}
-
-class _CalenderDialogWidgetState extends State<CalenderDialogWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return  Container(
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: const Color(0xff3A3A3A),
-        borderRadius: BorderRadius.circular(12),
-      ),
-
-    );
-  }
-}
