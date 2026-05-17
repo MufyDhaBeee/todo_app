@@ -194,8 +194,6 @@ void showAddTaskDialog(BuildContext context) {
   );
 }
 
-
-
 /// -------------------Task Priority----------------------------------------------------------------------------------->>>
 
 void showTaskPriorityDialog(BuildContext context) {
@@ -212,7 +210,7 @@ void showTaskPriorityDialog(BuildContext context) {
               child: Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Container(
-                   height: 400,
+                  height: 340,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(54, 54, 54, 1),
                     borderRadius: BorderRadius.circular(4),
@@ -232,7 +230,7 @@ void showTaskPriorityDialog(BuildContext context) {
                           fontWeight: FontWeight.w700,
                         ),
                       ),
-                       SizedBox(height: 5),
+                      SizedBox(height: 5),
                       // //------------------------------------------------------------------------------------
                       Divider(
                         color: Color.fromRGBO(151, 151, 151, 1),
@@ -240,20 +238,19 @@ void showTaskPriorityDialog(BuildContext context) {
                         indent: 10,
                         endIndent: 10,
                       ),
+                      SizedBox(height: 10),
                       SizedBox(
-                        height: 10,
-                      ),
-                      SizedBox(
-                        height: 300,
-                        width: 250,
+                        height: 200,
+                        width: 280,
                         child: GridView.builder(
-                          itemCount: 10,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                            mainAxisSpacing: 5,
-                            crossAxisSpacing: 5
-                          ),
-                          itemBuilder: (context,index){
+                          itemCount: 11,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                              ),
+                          itemBuilder: (context, index) {
                             return Container(
                               width: 64,
                               height: 64,
@@ -265,9 +262,7 @@ void showTaskPriorityDialog(BuildContext context) {
                                 padding: const EdgeInsets.only(top: 10),
                                 child: Column(
                                   children: [
-                                    SvgPicture.asset(
-                                      'assets/icons/flag.svg',
-                                    ),
+                                    SvgPicture.asset('assets/icons/flag.svg'),
                                     Text(
                                       index.toString(),
                                       style: TextStyle(
@@ -288,7 +283,141 @@ void showTaskPriorityDialog(BuildContext context) {
                           },
                         ),
                       ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 53,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(54, 54, 54, 1),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(134, 135, 231, 1),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 15),
+                            Container(
+                              height: 53,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(134, 135, 231, 1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Edit',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 1),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+///-----------Category section-------------------------------------------------------------------------------------->>
+///
+void showCategoryDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // User must tap a button to close
+    builder: (BuildContext context) {
+      return Provider<HomeProvider>(
+        create: (_) => HomeProvider(),
+        builder: (context, child) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Container(
+                  height: 200,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 54, 54, 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        //---- Header-------------------------------------------------------------->>
+                        const Text(
+                          ' Choose Category',
+                          style: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.87),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                        SizedBox(height: 5),
+                        // //------------------------------------------------------------------------------------
+                        Divider(
+                          color: Color.fromRGBO(151, 151, 151, 1),
+                          thickness: 1,
+                          indent: 10,
+                          endIndent: 10,
+                        ),
+                        SizedBox(height: 15),
+                        GridView.builder(
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                            mainAxisSpacing: 3,
+                            crossAxisSpacing: 3,
+                          ),
+                          itemCount: 10,
+                          itemBuilder: (context, index) {
+                            return CategoryTile();
+                          }
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Color.fromRGBO(134, 135, 231, 1),
+                          ),
+                          child: Text('Add Category', style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 16,
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                          ),),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

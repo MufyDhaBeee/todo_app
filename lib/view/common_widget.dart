@@ -112,7 +112,9 @@ class ToolbarRow extends StatelessWidget {
       children: [
         ToolbarIconButton(image: SvgPicture.asset('assets/icons/timer.svg'), onTap: () {},),
         const SizedBox(width: 20),
-         ToolbarIconButton(image: SvgPicture.asset('assets/icons/tag.svg'), onTap: () {}),
+         ToolbarIconButton(image: SvgPicture.asset('assets/icons/tag.svg'), onTap: () {
+           showCategoryDialog(context);
+         }),
         const SizedBox(width: 20),
         ToolbarIconButton(image: SvgPicture.asset('assets/icons/flag.svg'), onTap: () {
           showTaskPriorityDialog(context);
@@ -212,5 +214,41 @@ class ToolbarIconButton extends StatelessWidget {
     );
   }
 }
+///-----------Category------------------------------------------------------>>>
+//-----Reuseable category tile-------------------------------------->>>
+
+class CategoryTile extends StatelessWidget {
+  const CategoryTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return  Column(
+      children: [
+        Container(
+          height: 64,
+          width: 64,
+          decoration: BoxDecoration(
+            color: Color.fromRGBO(204, 255, 128, 1),
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: Center(
+            child: SvgPicture.asset('assets/icons/grocery.svg'),
+          ),
+        ),
+        const SizedBox(height: 6),
+        Text(
+         "Grocery",
+          style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 1), fontSize: 14, fontWeight: FontWeight.w500),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ],
+
+
+    );
+  }
+}
+
+
 
 
