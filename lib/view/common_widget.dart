@@ -110,7 +110,9 @@ class ToolbarRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        ToolbarIconButton(image: SvgPicture.asset('assets/icons/timer.svg'), onTap: () {},),
+        ToolbarIconButton(image: SvgPicture.asset('assets/icons/timer.svg'), onTap: () {
+          showCalenderDialog(context);
+        },),
         const SizedBox(width: 20),
          ToolbarIconButton(image: SvgPicture.asset('assets/icons/tag.svg'), onTap: () {
            showCategoryDialog(context);

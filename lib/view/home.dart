@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/model/task_states.dart';
+import 'package:todolist/view/category.dart';
 import 'package:todolist/view/common_widget.dart';
 import 'package:todolist/view/welcome_todo.dart';
 import 'package:todolist/viewmodel/bottom_nav_provider.dart';
@@ -130,7 +131,7 @@ void showAddTaskDialog(BuildContext context) {
                               const SizedBox(height: 16),
                               //---- Step 1: Title field  /  Step 2: Title as label -----------------------------------------------
                               if (context.watch<HomeProvider>().task_state ==
-                                  task_states.task_title) ...[
+                                  TaskStates.task_title) ...[
                                 TaskTextField(
                                   controller: context
                                       .watch<HomeProvider>()
@@ -143,8 +144,9 @@ void showAddTaskDialog(BuildContext context) {
                                     print("the task is compoleted");
                                     if (value.isNotEmpty) {
                                       print("done task");
-                                      homeProvider.task_state =
-                                          task_states.task_description;
+                                      homeProvider.changeCurrentStateOfTask(
+                                        TaskStates.task_description,
+                                      );
                                       print(homeProvider.titleController.text);
                                       print(
                                         context
@@ -157,7 +159,7 @@ void showAddTaskDialog(BuildContext context) {
                               ] else if (context
                                       .watch<HomeProvider>()
                                       .task_state ==
-                                  task_states.task_description) ...[
+                                  TaskStates.task_description) ...[
                                 Text(
                                   context
                                       .watch<HomeProvider>()
@@ -362,7 +364,8 @@ void showCategoryDialog(BuildContext context) {
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 child: Container(
-                  height: 200,
+                  height: 558,
+                  width: 327,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(54, 54, 54, 1),
                     borderRadius: BorderRadius.circular(4),
@@ -388,36 +391,131 @@ void showCategoryDialog(BuildContext context) {
                           endIndent: 10,
                         ),
                         SizedBox(height: 15),
-                        GridView.builder(
-                          shrinkWrap: true,
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                            mainAxisSpacing: 3,
-                            crossAxisSpacing: 3,
-                          ),
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return CategoryTile();
-                          }
-                        ),
                         SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(4),
-                            color: Color.fromRGBO(134, 135, 231, 1),
+                          height: 425,
+                          child: GridView.builder(
+                            shrinkWrap: true,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 3,
+                                  mainAxisSpacing: 3,
+                                  crossAxisSpacing: 3,
+                                ),
+                            itemCount: 11,
+                            itemBuilder: (context, index) {
+                              return CategoryTile();
+                            },
                           ),
-                          child: Text('Add Category', style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 16,
-                            color: Color.fromRGBO(255, 255, 255, 1),
-                          ),),
+                        ),
+                        SizedBox(height: 15),
+                        InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NewCategory(),
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 48,
+                            width: 289,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: Color.fromRGBO(134, 135, 231, 1),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Add Category',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Color.fromRGBO(255, 255, 255, 1),
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ],
                     ),
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+///---------------calender------------------------------------------------------------------>>>
+///
+void showCalenderDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // User must tap a button to close
+    builder: (BuildContext context) {
+      return Provider<HomeProvider>(
+        create: (_) => HomeProvider(),
+        builder: (context, child) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Container(
+                  height: 558,
+                  width: 327,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 54, 54, 1),
+                    borderRadius: BorderRadius.circular(4),
+
+                  ),
+                  child: Column(
+                    children: [
+                      //---- Header-------------------------------------------------------------->>\
+                      DatePickerTheme(
+                        data: DatePickerThemeData(
+                          backgroundColor: Color(0xff363636),
+                          headerBackgroundColor: Colors.white,
+                          dayBackgroundColor:WidgetStatePropertyAll(Color.fromRGBO(39, 39, 39, 1)),
+                          dayShape: WidgetStatePropertyAll<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(Radius.circular(6)),
+                            )
+                          ),
+                          dayForegroundColor: WidgetStatePropertyAll<Color>(
+                            Colors.white,
+                          ),
+                          dayStyle: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            color: Color.fromRGBO(255, 255, 255, 0.87),
+                          ),
+                          weekdayStyle: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 10,
+                            color: Color.fromRGBO(255, 255, 255, 0.87),
+                          ),
+                         ///---YearStyle-----------------------------
+                         // yearBackgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
+                          yearStyle: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.87),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                          //yearOverlayColor: WidgetStatePropertyAll<Color>(Colors.yellow),
+
+                        ),
+                        child: CalendarDatePicker(
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime.utc(2030),
+                          onDateChanged: (time) {},
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

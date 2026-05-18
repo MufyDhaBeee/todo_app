@@ -6,7 +6,10 @@ class HomeProvider extends ChangeNotifier {
   final TextEditingController descController = TextEditingController();
   final FocusNode titleFocus = FocusNode();
   final FocusNode descFocus = FocusNode();
-  task_states task_state= task_states.task_title;
-
+  TaskStates task_state= TaskStates.task_title;
+ changeCurrentStateOfTask(TaskStates taskState){
+   task_state=taskState;
+   notifyListeners();
+ }
 
 }
