@@ -465,7 +465,7 @@ void showCalenderDialog(BuildContext context) {
               child: Padding(
                 padding: const EdgeInsets.only(left: 15, right: 15),
                 child: Container(
-                  height: 558,
+                  height: 475,
                   width: 327,
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(54, 54, 54, 1),
@@ -479,6 +479,7 @@ void showCalenderDialog(BuildContext context) {
                         data: DatePickerThemeData(
                           backgroundColor: Color(0xff363636),
                           headerBackgroundColor: Colors.white,
+                          headerForegroundColor: Colors.white,
                           dayBackgroundColor:WidgetStatePropertyAll(Color.fromRGBO(39, 39, 39, 1)),
                           dayShape: WidgetStatePropertyAll<OutlinedBorder>(
                             RoundedRectangleBorder(
@@ -499,13 +500,12 @@ void showCalenderDialog(BuildContext context) {
                             color: Color.fromRGBO(255, 255, 255, 0.87),
                           ),
                          ///---YearStyle-----------------------------
-                         // yearBackgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
+                          yearBackgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
                           yearStyle: TextStyle(
                             color: Color.fromRGBO(255, 255, 255, 0.87),
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
                           ),
-                          //yearOverlayColor: WidgetStatePropertyAll<Color>(Colors.yellow),
 
                         ),
                         child: CalendarDatePicker(
@@ -515,6 +515,45 @@ void showCalenderDialog(BuildContext context) {
                           onDateChanged: (time) {},
                         ),
                       ),
+                      SizedBox(height: 30,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap:(){
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 153,
+                              decoration: BoxDecoration(
+                                color:   Color.fromRGBO(54, 54, 54, 1),
+
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(child: Text('Cancel', style: TextStyle(
+                                color:  Color.fromRGBO(134, 135, 231, 1),
+                                fontWeight: FontWeight.w400,
+                                fontSize: 16,
+                              ),)),
+                            ),
+                          ),
+                          SizedBox(width: 10,),
+                          Container(
+                            height: 48,
+                            width: 153,
+                            decoration: BoxDecoration(
+                              color:  Color.fromRGBO(134, 135, 231, 1),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(child: Text('Choose Time', style: TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                              fontSize: 16,
+                              fontWeight: FontWeight.w400,
+                            ),)),
+                          ),
+                        ],
+                      )
                     ],
                   ),
                 ),

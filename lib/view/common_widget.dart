@@ -125,6 +125,8 @@ class ToolbarRow extends StatelessWidget {
         // Send button
         GestureDetector(
           onTap: () {
+            showCalenderDialog(context);
+
             // switch(index){
             //   case 0:
             //     showAddTaskDescriptionDialog(context);
