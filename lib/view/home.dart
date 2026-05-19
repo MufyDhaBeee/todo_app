@@ -470,21 +470,25 @@ void showCalenderDialog(BuildContext context) {
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(54, 54, 54, 1),
                     borderRadius: BorderRadius.circular(4),
-
                   ),
                   child: Column(
                     children: [
                       //---- Header-------------------------------------------------------------->>\
                       DatePickerTheme(
                         data: DatePickerThemeData(
+                          headerHelpStyle: TextStyle(color: Colors.red),
                           backgroundColor: Color(0xff363636),
                           headerBackgroundColor: Colors.white,
                           headerForegroundColor: Colors.white,
-                          dayBackgroundColor:WidgetStatePropertyAll(Color.fromRGBO(39, 39, 39, 1)),
+                          dayBackgroundColor: WidgetStatePropertyAll(
+                            Color.fromRGBO(39, 39, 39, 1),
+                          ),
                           dayShape: WidgetStatePropertyAll<OutlinedBorder>(
                             RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(Radius.circular(6)),
-                            )
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(6),
+                              ),
+                            ),
                           ),
                           dayForegroundColor: WidgetStatePropertyAll<Color>(
                             Colors.white,
@@ -499,14 +503,16 @@ void showCalenderDialog(BuildContext context) {
                             fontSize: 10,
                             color: Color.fromRGBO(255, 255, 255, 0.87),
                           ),
-                         ///---YearStyle-----------------------------
-                          yearBackgroundColor: WidgetStatePropertyAll<Color>(Colors.white),
+
+                          ///---YearStyle-----------------------------
+                          yearBackgroundColor: WidgetStatePropertyAll<Color>(
+                            Colors.white,
+                          ),
                           yearStyle: TextStyle(
                             color: Color.fromRGBO(255, 255, 255, 0.87),
                             fontWeight: FontWeight.w400,
                             fontSize: 14,
                           ),
-
                         ),
                         child: CalendarDatePicker(
                           initialDate: DateTime.now(),
@@ -515,45 +521,210 @@ void showCalenderDialog(BuildContext context) {
                           onDateChanged: (time) {},
                         ),
                       ),
-                      SizedBox(height: 30,),
+                      SizedBox(height: 30),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           InkWell(
-                            onTap:(){
+                            onTap: () {
                               Navigator.pop(context);
                             },
                             child: Container(
                               height: 48,
                               width: 153,
                               decoration: BoxDecoration(
-                                color:   Color.fromRGBO(54, 54, 54, 1),
+                                color: Color.fromRGBO(54, 54, 54, 1),
 
                                 borderRadius: BorderRadius.circular(4),
                               ),
-                              child: Center(child: Text('Cancel', style: TextStyle(
-                                color:  Color.fromRGBO(134, 135, 231, 1),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 16,
-                              ),)),
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(134, 135, 231, 1),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
-                          SizedBox(width: 10,),
-                          Container(
-                            height: 48,
-                            width: 153,
-                            decoration: BoxDecoration(
-                              color:  Color.fromRGBO(134, 135, 231, 1),
-                              borderRadius: BorderRadius.circular(4),
+                          SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              showTimerDialog(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 153,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(134, 135, 231, 1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Choose Time',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 1),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
                             ),
-                            child: Center(child: Text('Choose Time', style: TextStyle(
-                                color: Color.fromRGBO(255, 255, 255, 1),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w400,
-                            ),)),
                           ),
                         ],
-                      )
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+///--------------------------Timer------------------------------------------------------------->>
+///
+void showTimerDialog(BuildContext context) {
+  int selectedHour = 8;
+  int selectedMinute = 20;
+  String selectedPeriod = 'PM';
+
+  showDialog(
+    context: context,
+    barrierDismissible: false, // User must tap a button to close
+    builder: (BuildContext context) {
+      return Provider<HomeProvider>(
+        create: (_) => HomeProvider(),
+        builder: (context, child) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Container(
+                  height: 250,
+                  width: 327,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 54, 54, 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
+                      //---- Header-------------------------------------------------------------->>
+                      Text(
+                        'Choose Time',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(255, 255, 255, 0.87),
+                        ),
+                      ),
+                      SizedBox(height: 8),
+                      Divider(
+                        thickness: 1.5,
+                        color: Color.fromRGBO(151, 151, 151, 1),
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                      SizedBox(height: 10),
+                      //---Scrollable Picker Row----------------------------------------------------------------------->
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildScrollTimer(
+                              currentValue: selectedHour,
+                              itemCount: 12,
+                              offSet: 1,
+                              onChanged: (val) => selectedHour = val + 1,
+                            ),
+                            SizedBox(width: 15),
+                            Text(
+                              ':',
+                              style: TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 0.87),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(width: 15),
+                            buildScrollTimer(
+                              currentValue: selectedMinute,
+                              itemCount: 60,
+                              onChanged: (val) => selectedMinute = val,
+                              offSet: 0,
+                            ),
+                            SizedBox(width: 15),
+                            buildScrollTimer(
+                                currentValue: selectedPeriod ==  'AM' ? 0 : 1,
+                                itemCount: 2,
+                                isPeriod: true,
+                                onChanged: (val) => selectedPeriod = val == 0 ? 'AM' : 'PM',
+                            )
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      //------------Action Button---------------------------------->>
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 153,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(54, 54, 54, 1),
+
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(134, 135, 231, 1),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              showTimerDialog(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 153,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(134, 135, 231, 1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 1),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),

@@ -253,6 +253,132 @@ class CategoryTile extends StatelessWidget {
   }
 }
 
+///-----------Choose Timer-------------------------------------------------------------------------------------->>
+///
+
+Widget buildScrollTimer({
+  required int currentValue,
+  required int itemCount,
+  int offSet = 0,
+  bool isPeriod = false,
+  required ValueChanged<int> onChanged,
+}) {
+  return Container(
+    height: 64,
+    width: 64,
+    decoration: BoxDecoration(
+      color: Color.fromRGBO(39, 39, 39, 1),
+      borderRadius: BorderRadius.circular(4),
+    ),
+child: ListWheelScrollView.useDelegate(
+    itemExtent: 32,
+perspective: 0.005,
+    diameterRatio: 1.2,
+    physics: FixedExtentScrollPhysics(),
+    controller: FixedExtentScrollController(
+      initialItem: isPeriod ? currentValue : (currentValue - offSet),
+    ),
+    onSelectedItemChanged: onChanged,
+    childDelegate: ListWheelChildBuilderDelegate(
+        childCount: itemCount,
+        builder: (context, index) {
+          String text;
+          if (isPeriod){
+            text = index == 0 ? 'AM' : 'PM';
+          }else{
+            int actualValue = index + offSet;
+            text = actualValue.toString().padLeft(2, '0');
+          }
+          return Center(
+            child: Text(text, style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: Color.fromRGBO(255, 255, 255, 0.87),
+            ),),
+
+
+    );}
+),
 
 
 
+
+  ));
+}
+
+
+// ---- Category Chip ------------------------------------------------------------------------------------
+
+class CategoryChip extends StatelessWidget {
+  late final String label;
+  late final IconData icon;
+  late final Color color;
+
+  CategoryChip({
+    required this.label,
+    required this.icon,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      decoration: BoxDecoration(
+        color: Color.fromRGBO(128, 156, 255, 1),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, color: color, size: 13),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+//-----Priority Badge-------------------------------------------------------------------------
+
+class PriorityBadge extends StatelessWidget {
+  final int priority;
+
+  const PriorityBadge({required this.priority});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
+      decoration: BoxDecoration(
+
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(
+            width: 2,
+            color:Color.fromRGBO(134, 135, 231, 1)),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.flag_outlined, color: Color.fromRGBO(255, 255, 255, 1), size: 13),
+          const SizedBox(width: 3),
+          Text(
+            '$priority',
+            style: const TextStyle(
+              color: Color.fromRGBO(255, 255, 255, 1),
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
