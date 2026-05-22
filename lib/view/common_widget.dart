@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+import 'package:todolist/model/task_model.dart';
+import 'package:todolist/model/task_states.dart';
 import 'package:todolist/view/home.dart';
+import 'package:todolist/viewmodel/task_provider.dart';
 
 class TaskSection extends StatefulWidget {
 
@@ -30,6 +34,7 @@ class TaskSectionState extends State<TaskSection> {
 }
 
 // -------------------SectionLabel--------------------------------------->
+
 class SectionLabel extends StatelessWidget {
   final String label;
   const SectionLabel({super.key, required this.label});
@@ -46,6 +51,7 @@ class SectionLabel extends StatelessWidget {
     );
   }
 }
+
 class ProfileMenuItem extends StatelessWidget {
   final IconData icon;
   final String title;
@@ -108,45 +114,69 @@ class ToolbarRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ToolbarIconButton(image: SvgPicture.asset('assets/icons/timer.svg'), onTap: () {
-          showCalenderDialog(context);
-        },),
-        const SizedBox(width: 20),
-         ToolbarIconButton(image: SvgPicture.asset('assets/icons/tag.svg'), onTap: () {
-           showCategoryDialog(context);
-         }),
-        const SizedBox(width: 20),
-        ToolbarIconButton(image: SvgPicture.asset('assets/icons/flag.svg'), onTap: () {
-          showTaskPriorityDialog(context);
-        }),
-        const Spacer(),
-        // Send button
-        GestureDetector(
-          onTap: () {
-            showCalenderDialog(context);
+    return Consumer<TaskProvider>(
+      builder: (context,taskProvider,child) {
+        return Row(
+          children: [
+            ToolbarIconButton(image: SvgPicture.asset('assets/icons/timer.svg'), onTap: () {
+              showCalenderDialog(context);
+            },),
+            const SizedBox(width: 20),
+             ToolbarIconButton(image: SvgPicture.asset('assets/icons/tag.svg'), onTap: () {
+               showCategoryDialog(context);
+             }),
+            const SizedBox(width: 20),
+            ToolbarIconButton(image: SvgPicture.asset('assets/icons/flag.svg'), onTap: () {
+              showTaskPriorityDialog(context);
+            }),
+            const Spacer(),
+            // Send button
+            GestureDetector(
+              onTap: () {
+                switch(taskProvider.task_state){
 
-            // switch(index){
-            //   case 0:
-            //     showAddTaskDescriptionDialog(context);
-            //     index++
-            //         break;
-            //   case 2:
-            //     calendarPopip()
-            //         break
-            //   case 3:
+                  case TaskStates.task_title:
+                    taskProvider.title=taskProvider.titleController.text;
+                    print(" current task title ${taskProvider.titleController.text}");
+                    taskProvider.changeCurrentStateOfTask(TaskStates.task_description);
 
+                  case TaskStates.task_description:
+                    taskProvider.description = taskProvider.descController.text;
+                    print(" current task description ${taskProvider.descController.text}");
 
-            //}
-    },
-          child: Container(
-            padding: const EdgeInsets.all(8),
-            child: SvgPicture.asset('assets/icons/send.svg'
+                    showCalenderDialog(context);
+                    taskProvider.changeCurrentStateOfTask(TaskStates.task_calendar);
+                    // TODO: Handle this case.
+                  // case TaskStates.task_calendar:
+                  //   showTimerDialog(context);
+                  //   taskProvider.changeCurrentStateOfTask(TaskStates.task_time);
+                  //
+                  //   // TODO: Handle this case.
+                  // case TaskStates.task_time:
+                  //   showTaskPriorityDialog(context);
+                  //   taskProvider.changeCurrentStateOfTask(TaskStates.task_proirity);
+                  //
+                  // case TaskStates.task_proirity:
+                  //   showCategoryDialog(context);
+                  //   taskProvider.changeCurrentStateOfTask(TaskStates.task_category);
+                  //
+                  // case TaskStates.task_category:
+                  //
+                  //   taskProvider.addToTask(TaskModel(title: taskProvider.titleController.text, description: taskProvider.descController.text, createdAt: DateTime.now(), endedDate: DateTime.now(), priority: 0, category: "dsfds"));
+default:
+  print("something");
+                }
+
+        },
+              child: Container(
+                padding: const EdgeInsets.all(8),
+                child: SvgPicture.asset('assets/icons/send.svg'
+                ),
+              ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      }
     );
   }
 }
@@ -272,7 +302,7 @@ Widget buildScrollTimer({
     ),
 child: ListWheelScrollView.useDelegate(
     itemExtent: 32,
-perspective: 0.005,
+    perspective: 0.005,
     diameterRatio: 1.2,
     physics: FixedExtentScrollPhysics(),
     controller: FixedExtentScrollController(

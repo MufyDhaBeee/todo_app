@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:todolist/view/bottom_nav_bar.dart';
 import 'package:todolist/viewmodel/bottom_nav_provider.dart';
 import 'package:todolist/viewmodel/home_provider.dart';
+import 'package:todolist/viewmodel/task_provider.dart';
 
 
 void main() {
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       home: MultiProvider(providers: [
         ChangeNotifierProvider(create: (_)=>BottomNavProvider(),),
         ChangeNotifierProvider(create: (_)=>HomeProvider()),
+        ChangeNotifierProvider(create: (_)=>TaskProvider()),
 
 
       ],

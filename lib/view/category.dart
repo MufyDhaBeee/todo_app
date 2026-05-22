@@ -18,7 +18,6 @@ class _NewCategoryState extends State<NewCategory> {
     print(' the category  page build function is calling is calling');
     return Scaffold(
       backgroundColor: Color.fromRGBO(18, 18, 18, 1),
-
       body: Padding(
         padding: const EdgeInsets.only(left: 30, top: 30),
         child: Column(

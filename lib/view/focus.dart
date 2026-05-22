@@ -14,28 +14,6 @@ class FocusPage extends StatefulWidget {
 class _FocusPageState extends State<FocusPage> {
   @override
   Widget build(BuildContext context) {
-    // Data: hours for SUN, MON, TUE, WED, THU, FRI, SAT
-    // final List<Map<String, dynamic>> data = [
-    //   {'day': 'SUN', 'hours': 2.5, 'label': '2h30m', 'isHighlighted': false},
-    //   {'day': 'MON', 'hours': 3.5, 'label': '3h30m', 'isHighlighted': false},
-    //   {'day': 'TUE', 'hours': 5.0, 'label': '5H', 'isHighlighted': false},
-    //   {'day': 'WED', 'hours': 3.0, 'label': '3h', 'isHighlighted': false},
-    //   {'day': 'THU', 'hours': 4.0, 'label': '4h', 'isHighlighted': false},
-    //   {'day': 'FRI', 'hours': 4.5, 'label': '4h30m', 'isHighlighted': true},
-    //   {'day': 'SAT', 'hours': 2.0, 'label': '2h', 'isHighlighted': false},
-    // ];
-    //const double maxHours = 6.0;
-    // const double graphHeight = 180.0;
-    // const double barWidth = 28.0;
-
-    //  const double maxBarHeight = 160.0; // px for 6h
-    // const Color highlightColor = Color(0xFF7B6FCD); // purple/violet
-    // const Color normalColor = Color(0xFF3A3A3A); // dark grey
-   // const Color sundayColor = Color.fromRGBO(255, 73, 73, 1,); // red for SUN label
-    //const Color saturdayColor = Color.fromRGBO(255, 73, 73, 1,); // red for SAT label
-
-    // Y-axis labels
-    //final List<String> yLabels = ['6h', '5h', '4h', '3h', '2h', '1h'];
     return Consumer<BottomNavProvider>(
       builder: (context, bottom, child) {
         print('focus');
@@ -210,8 +188,6 @@ class WeeklyOverviewGraph extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Data: hours per day (SUN to SAT)
-    // SUN=2.5, MON=3.5, TUE=5.0, WED=3.0, THU=4.0, FRI=4.5, SAT=2.0
     final List<BarData> data = [
       BarData(
         day: 'SUN',
@@ -282,7 +258,6 @@ class WeeklyOverviewGraph extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           const SizedBox(height: 20),
-
           // Graph area: Y-axis + Bars
           Row(
             crossAxisAlignment: CrossAxisAlignment.end,
@@ -307,9 +282,7 @@ class WeeklyOverviewGraph extends StatelessWidget {
                       .toList(),
                 ),
               ),
-
               const SizedBox(width: 8),
-
               // Bars + Day labels
               Expanded(
                 child: Column(
@@ -323,7 +296,6 @@ class WeeklyOverviewGraph extends StatelessWidget {
                         children: data.map((bar) {
                           final double barHeight =
                               (bar.hours / maxHours) * graphHeight;
-
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
@@ -356,9 +328,7 @@ class WeeklyOverviewGraph extends StatelessWidget {
                         }).toList(),
                       ),
                     ),
-
                     const SizedBox(height: 8),
-
                     // Day labels row
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,

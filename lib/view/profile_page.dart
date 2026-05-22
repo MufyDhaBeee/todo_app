@@ -10,6 +10,7 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  String accountName = 'Martha Hays';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,7 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
             const Padding(
               padding: EdgeInsets.only(top: 15, bottom: 16),
               child: Center(
-                child: Text(
+                child:  Text(
                   'Martha Hays',
                   style: TextStyle(
                     color: Color.fromRGBO(255, 255, 255, 0.87),
@@ -80,7 +81,12 @@ class _ProfilePageState extends State<ProfilePage> {
               icon: Icons.person,
               title: 'Change account name',
               ontap: () {
-                showChangeAccountNameDialog(context);
+                showChangeAccountNameDialog( context: context, currentName: accountName,
+                    onNameChanged: (newName) {
+                  setState(() {
+                    accountName = newName;
+                  });
+                    });
               },
             ),
             ProfileMenuItem(
@@ -128,7 +134,9 @@ class _ProfilePageState extends State<ProfilePage> {
 }
 
 ///----------------------------Alert Dialog Settings---> change Account---------------------------->
-void showChangeAccountNameDialog(BuildContext context) {
+void showChangeAccountNameDialog({ required BuildContext context, required String currentName, required Function(String) onNameChanged}) {
+  final TextEditingController controller = TextEditingController(text: currentName);
+//String accountName = 'Martha Hays';
   showDialog(
     context: context,
     barrierDismissible: false, // User must tap a button to close
@@ -171,8 +179,8 @@ void showChangeAccountNameDialog(BuildContext context) {
                       )
                     ),
                       child: TextField(
+                        controller: controller,
                         decoration: InputDecoration(
-                          hintText: '  Martha Hays',
                           hintStyle: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.w400,
@@ -208,16 +216,23 @@ void showChangeAccountNameDialog(BuildContext context) {
                           ),
                         ),
                         SizedBox(width: 15,),
-                        Container(
-                          height: 53,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color:  Color.fromRGBO(134, 135, 231, 1),
-                              borderRadius: BorderRadius.circular(4),
+                        InkWell(
+                          onTap: (){
+                            onNameChanged(controller.text);
+                            Navigator.pop(context);
+
+                          },
+                          child: Container(
+                            height: 53,
+                            width: 150,
+                            decoration: BoxDecoration(
+                                color:  Color.fromRGBO(134, 135, 231, 1),
+                                borderRadius: BorderRadius.circular(4),
+                            ),
+                            child: Center(child: Text('Edit', style: TextStyle(
+                              color: Color.fromRGBO(255, 255, 255, 1)
+                            ),)),
                           ),
-                          child: Center(child: Text('Edit', style: TextStyle(
-                            color: Color.fromRGBO(255, 255, 255, 1)
-                          ),)),
                         ),
                       ],
                     ),
