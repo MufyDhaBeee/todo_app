@@ -5,8 +5,7 @@ import 'package:todolist/model/task_model.dart';
 import '../model/task_states.dart';
 
 class TaskProvider extends ChangeNotifier{
-  List<TaskModel> tasks = [
-  ];
+  List<TaskModel> tasks = [];
   final TextEditingController titleController = TextEditingController();
   String? title;
   String? description;
