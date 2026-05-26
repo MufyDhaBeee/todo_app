@@ -276,12 +276,6 @@ void showChangeAccountNameDialog({
 ///---------------Change Account Password------------------------------------------------------------------------>>>
 
 void showChangeAccountPasswordDialog(BuildContext context) {
-  final TextEditingController oldPasswordController = TextEditingController();
-  final TextEditingController newPassWordController = TextEditingController();
-  //--Visibility----------------------------->
-  bool obscureOld = true;
-  bool obscureNew = true;
-
   showDialog(
     context: context,
     barrierDismissible: false, // User must tap a button to close
@@ -344,18 +338,27 @@ void showChangeAccountPasswordDialog(BuildContext context) {
                                   ),
                                 ),
                                 child: TextField(
-                                  controller: oldPasswordController,
-                                  obscureText: obscureOld,
+                                  controller: profileProvider.oldPasswordController,
+                                  obscureText: profileProvider.obscureOld,
                                   style: TextStyle(
                                     color: Color.fromRGBO(255, 255, 255, 0.87), fontWeight: FontWeight.w400, fontSize: 15,
                                   ),
                                   decoration: InputDecoration(
-                                    hintText: ' ******',
+                                    hintText: '',
                                     hintStyle: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
                                       color: Color.fromRGBO(255, 255, 255, 0.87),
                                     ),
+                                    suffixIcon: IconButton(
+                                        icon: Icon(
+                                          profileProvider.obscureOld ? Icons.visibility : Icons.visibility_off,
+                                          color: Color.fromRGBO(255, 255, 255, 0.87),
+                                        ),
+                                      onPressed: (){
+                                          profileProvider.toggleOldPasswordVisibility();
+                                      },
+                                    )
                                   ),
                                 ),
                               ),
@@ -380,15 +383,25 @@ void showChangeAccountPasswordDialog(BuildContext context) {
                                   ),
                                 ),
                                 child: TextField(
-                                  controller: newPassWordController,
-                                  obscureText: obscureNew,
+                                  controller: profileProvider.newPassWordController,
+                                  obscureText: profileProvider.obscureNew,
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 0.87),
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                   decoration: InputDecoration(
-                                    hintText: ' ******',
+                                    hintText: '',
                                     hintStyle: TextStyle(
                                       fontSize: 15,
                                       fontWeight: FontWeight.w400,
                                       color: Color.fromRGBO(255, 255, 255, 0.87),
                                     ),
+                                    suffixIcon: IconButton( icon: Icon(profileProvider.obscureNew ? Icons.visibility : Icons.visibility_off, color: Color.fromRGBO(255, 255, 255, 0.87),),
+                                      onPressed: (){
+                                      profileProvider.toggleNewPasswordVisibility();
+                                      },
+                                    )
                                   ),
                                 ),
                               ),
@@ -425,18 +438,27 @@ void showChangeAccountPasswordDialog(BuildContext context) {
                                   ),
                                 ),
                                 SizedBox(width: 15),
-                                Container(
-                                  height: 53,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(134, 135, 231, 1),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Edit',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
+                                InkWell(
+                                  onTap: (){
+                                    bool isSucess = profileProvider.processPasswordChange();
+                                    if(isSucess){
+                                      Navigator.pop(context);
+                                    }else{
+                                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Invalid Password', style: TextStyle(color: Colors.red),)));                                  }
+                                  },
+                                  child: Container(
+                                    height: 53,
+                                    width: 150,
+                                    decoration: BoxDecoration(
+                                      color: Color.fromRGBO(134, 135, 231, 1),
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Edit',
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(255, 255, 255, 1),
+                                        ),
                                       ),
                                     ),
                                   ),
