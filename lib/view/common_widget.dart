@@ -136,7 +136,6 @@ class ToolbarRow extends StatelessWidget {
                 switch(taskProvider.task_state){
 
                   case TaskStates.task_title:
-                    taskProvider.title=taskProvider.titleController.text;
                     print(" current task title ${taskProvider.titleController.text}");
                     taskProvider.changeCurrentStateOfTask(TaskStates.task_description);
 
@@ -187,13 +186,11 @@ default:
 class TaskTextField extends StatelessWidget {
   const TaskTextField({
     super.key,
-    required this.controller,
     required this.focusNode,
     required this.hintText,
     required this.onSubmitted,
   });
 
-  final TextEditingController controller;
   final FocusNode focusNode;
   final String hintText;
   final ValueChanged<String> onSubmitted;
@@ -210,7 +207,6 @@ class TaskTextField extends StatelessWidget {
       ),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       child: TextField(
-        controller: controller,
 
         focusNode: focusNode,
         onSubmitted: onSubmitted,

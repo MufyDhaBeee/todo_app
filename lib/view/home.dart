@@ -48,24 +48,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           body: taskProvider.tasks.isNotEmpty
-              // ?  EmptyHomePage()
-              // : HomeScreenPage(),
+
               ? Column(
                   children: [
                     Row(
                       children: [
                         SvgPicture.asset('assets/icons/search.svg'),
                         SizedBox(width: 10),
-                        // TextField(
-                        //   decoration: InputDecoration(
-                        //     hintText: 'Search for your task...',
-                        //     hintStyle: TextStyle(
-                        //       color: Color.fromRGBO(175, 175, 175, 1),
-                        //       fontSize: 16,
-                        //       fontWeight: FontWeight.w600,
-                        //     )
-                        //   ),
-                        // ),
                         Text(
                           'Search for your task...',
                           style: TextStyle(
@@ -81,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       itemCount: taskProvider.tasks.length,
                       itemBuilder: (context, index) {
                         final task = taskProvider.tasks[index];
-                        return Card(child: ListTile(title: Text(task.title!)));
+                        return Card(color: Colors.white,child: ListTile(title: Text(task.title!)));
                       },
                     ),
                   ],
@@ -137,104 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
 //---------click fab button-------------------------------------------------------------------->>>
 ///-------------Add Task---------------------------------------------------------->>>
 // parent page--------------------------------------------------------------->>>
-class ShowTasks extends StatefulWidget {
-  const ShowTasks({super.key});
 
-  @override
-  State<ShowTasks> createState() => _ShowTasksState();
-}
-
-class _ShowTasksState extends State<ShowTasks> {
-  @override
-  Widget build(BuildContext context) {
-    return ChangeNotifierProvider<TaskProvider>(
-      create: (_) => TaskProvider(),
-      builder: (context, child) {
-        return Consumer<TaskProvider>(
-          builder: (context, taskProvider, child) {
-            return Center(
-              child: Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: Container(
-                  height: 280,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(54, 54, 54, 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        textDirection: TextDirection.ltr,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(height: 10),
-                          //---- Header-------------------------------------------------------------->>
-                          const Text(
-                            ' Add Task',
-                            style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 0.87),
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          //---- Step 1: Title field  /  Step 2: Title as label -----------------------------------------------
-                          if (taskProvider.task_state ==
-                              TaskStates.task_title) ...[
-                            TaskTextField(
-                              controller: taskProvider.titleController,
-                              focusNode: taskProvider.titleFocus,
-                              hintText: 'Do math homework',
-                              onSubmitted: (String value) {
-                                print("the task is completed");
-                                if (value.isNotEmpty) {
-                                  print("done task");
-                                  taskProvider.changeCurrentStateOfTask(
-                                    TaskStates.task_description,
-                                  );
-                                  print(taskProvider.titleController.text);
-                                  print(taskProvider.task_state);
-                                }
-                              },
-                            ),
-                          ] else if (taskProvider.task_state ==
-                              TaskStates.task_description) ...[
-                            TaskTextField(
-                              controller: taskProvider.descController,
-                              focusNode: taskProvider.descFocus,
-                              hintText: 'Do math homework',
-                              onSubmitted: (value) {},
-                            ),
-                            Text(taskProvider.titleController.text),
-                          ],
-
-                          SizedBox(height: 20),
-                          Text(
-                            ' Description',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 18,
-                              color: Color.fromRGBO(175, 175, 175, 1),
-                            ),
-                          ),
-                          SizedBox(height: 35),
-                          //---------ToolBar Icon---------------------------------------------------------------------------->
-                          ToolbarRow(),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-      },
-    );
-  }
-}
 
 void showAddTaskDialog(BuildContext context) {
   showDialog(
@@ -246,7 +138,6 @@ void showAddTaskDialog(BuildContext context) {
         builder: (context, child) {
           return Consumer<TaskProvider>(
             builder: (context, taskProvider, child) {
-
                 return Material(
                   color: Colors.transparent,
                   child: Center(
@@ -281,19 +172,19 @@ void showAddTaskDialog(BuildContext context) {
                                 if (taskProvider.task_state ==
                                     TaskStates.task_title) ...[
                                   TaskTextField(
-                                    controller: taskProvider.titleController,
+                                    // controller: taskProvider.titleController,
                                     focusNode: taskProvider.titleFocus,
                                     hintText: 'Do math homework',
                                     onSubmitted: (String value) {
                                       print("the task is completed");
                                       if (value.isNotEmpty) {
                                         print("done task");
+                                        taskProvider.changeValueofTask(value);
+
                                         taskProvider.changeCurrentStateOfTask(
                                           TaskStates.task_description,
                                         );
-                                        print(
-                                          taskProvider.titleController.text,
-                                        );
+
                                         print(taskProvider.task_state);
                                       }
                                     },
@@ -308,7 +199,7 @@ void showAddTaskDialog(BuildContext context) {
                                   ),
                                 ] else if (taskProvider.task_state ==
                                     TaskStates.task_description) ...[
-                                  Text(taskProvider.titleController.text,style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w400),),
+                                  Text(taskProvider.title!,style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w400),),
                                   Text(
                                     ' Description',
                                     style: TextStyle(
@@ -318,10 +209,11 @@ void showAddTaskDialog(BuildContext context) {
                                     ),
                                   ),
                                   TaskTextField(
-                                    controller: taskProvider.descController,
                                     focusNode: taskProvider.descFocus,
                                     hintText: 'Add A description',
-                                    onSubmitted: (value) {},
+                                    onSubmitted: (value) {
+                                      taskProvider.changeValueofTask(value);
+                                    },
                                   ),
                                 ],
 
@@ -517,17 +409,12 @@ void showTaskPriorityDialog(BuildContext context) {
                                   onTap: (){
                                     taskProvider.taskPrority=index;
                                     print("this from priority side task adding function after ${taskProvider.taskPrority}");
-                                    print(taskProvider.titleController.text);
-                                    print(taskProvider.descController.text);
-                                    print(taskProvider.dateTime);
-                                    print(taskProvider.taskPrority);
 
 
 
 
-                                   final taskModel= TaskModel(title: taskProvider.titleController.text, description: taskProvider.descController.text, createdAt: DateTime.now(), endedDate: taskProvider.dateTime, priority: taskProvider.taskPrority, category: "normal ")    ;
-                                   print("taskModel current final ${taskModel.title}");
-                                   taskProvider.addToTask(taskModel);
+
+                                   taskProvider.addToTask(index);
                                     Navigator.of(context).popUntil((route)=>route.isFirst);
                                   },
                                   child: Container(
