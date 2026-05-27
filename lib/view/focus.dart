@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:todolist/viewmodel/bottom_nav_provider.dart';
+import 'package:todolist/viewmodel/focus_provider.dart';
 
 class FocusPage extends StatefulWidget {
   const FocusPage({super.key});
@@ -14,8 +15,8 @@ class FocusPage extends StatefulWidget {
 class _FocusPageState extends State<FocusPage> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<BottomNavProvider>(
-      builder: (context, bottom, child) {
+    return Consumer<FocusProvider>(
+      builder: (context, focusProvider, child) {
         print('focus');
         return Scaffold(
           backgroundColor: Color.fromRGBO(18, 18, 18, 1),
@@ -41,7 +42,9 @@ class _FocusPageState extends State<FocusPage> {
                 CircularCountDownTimer(
                   width: MediaQuery.of(context).size.width / 2,
                   height: MediaQuery.of(context).size.height / 2,
-                  duration: 15,
+                  controller: focusProvider.controller,
+                  duration: 30,
+                  autoStart: focusProvider.isRunning,
                   fillColor: Color.fromRGBO(134, 135, 231, 1),
                   ringColor: Color.fromRGBO(85, 85, 85, 1),
                   strokeWidth: 15.0,
@@ -51,6 +54,13 @@ class _FocusPageState extends State<FocusPage> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
+                  onStart: (){
+                    debugPrint('Timer started');
+                    // focusProvider.change();
+                  },
+                  onComplete: (){
+                    debugPrint('Timer completed');
+                  },
                 ),
                 //-----------------------------Text-------------------------------------->
                 Text(
@@ -64,20 +74,25 @@ class _FocusPageState extends State<FocusPage> {
                 ),
                 SizedBox(height: 25),
                 //--------------------------------------Start Focusing----------------------------------->
-                Container(
-                  height: 48,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(134, 135, 231, 1),
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Start Focusing',
-                      style: TextStyle(
-                        color: Color.fromRGBO(255, 255, 255, 1),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
+                GestureDetector(
+                  onTap: (){
+               focusProvider.change();
+                  },
+                  child: Container(
+                    height: 48,
+                    width: 200,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(134, 135, 231, 1),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Center(
+                      child: Text(
+                        focusProvider.isRunning ? 'Stop Focusing' : 'Start Focusing',
+                        style: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                        ),
                       ),
                     ),
                   ),
