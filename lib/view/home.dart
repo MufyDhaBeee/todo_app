@@ -22,8 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Consumer<TaskProvider>(
       builder: (context, taskProvider, child) {
-        print(taskProvider.tasks.isNotEmpty);
-        print("WELCOME TO THE HOME PAGE");
         return Scaffold(
           backgroundColor: Colors.black,
           appBar: AppBar(
@@ -109,23 +107,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-          // ListView.builder(
-          //   itemCount: taskProvider.tasks.length,
-          //     itemBuilder: (context,index){
-          //     final task=taskProvider.tasks[index];
-          //       return ListTile(
-          //         title: Text(task.title!),
-          //       );
-          // }),
+
         );
       },
     );
   }
 }
 
-//---------click fab button-------------------------------------------------------------------->>>
-///-------------Add Task---------------------------------------------------------->>>
-// parent page--------------------------------------------------------------->>>
+
 
 
 void showAddTaskDialog(BuildContext context) {
