@@ -42,24 +42,25 @@ class _FocusPageState extends State<FocusPage> {
                 CircularCountDownTimer(
                   width: MediaQuery.of(context).size.width / 2,
                   height: MediaQuery.of(context).size.height / 2,
-                  controller: focusProvider.controller,
-                  duration: 30,
-                  autoStart: focusProvider.isRunning,
+                  controller: focusProvider.countDownController,
+                  duration: focusProvider.totalDuration,
                   fillColor: Color.fromRGBO(134, 135, 231, 1),
+                  isTimerTextShown: true,
                   ringColor: Color.fromRGBO(85, 85, 85, 1),
                   strokeWidth: 15.0,
+                  isReverse: true,
+                  isReverseAnimation: true,
+                  autoStart: false,
                   strokeCap: StrokeCap.round,
                   textStyle: TextStyle(
                     fontSize: 33.0,
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
-                  onStart: (){
-                    debugPrint('Timer started');
-                    // focusProvider.change();
-                  },
+                  textFormat: CountdownTextFormat.MM_SS,
+                  onStart: (){},
                   onComplete: (){
-                    debugPrint('Timer completed');
+                    focusProvider.onTimerComplete();
                   },
                 ),
                 //-----------------------------Text-------------------------------------->
@@ -76,7 +77,11 @@ class _FocusPageState extends State<FocusPage> {
                 //--------------------------------------Start Focusing----------------------------------->
                 GestureDetector(
                   onTap: (){
-               focusProvider.change();
+               if(focusProvider.isFocusing){
+                 focusProvider.stopFocusing();
+               }else{
+                 focusProvider.startFocusing();
+               }
                   },
                   child: Container(
                     height: 48,
@@ -87,7 +92,7 @@ class _FocusPageState extends State<FocusPage> {
                     ),
                     child: Center(
                       child: Text(
-                        focusProvider.isRunning ? 'Stop Focusing' : 'Start Focusing',
+                        focusProvider.isFocusing ? 'Stop Focusing' : 'Start Focusing',
                         style: TextStyle(
                           color: Color.fromRGBO(255, 255, 255, 1),
                           fontSize: 16,
