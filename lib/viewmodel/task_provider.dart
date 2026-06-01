@@ -33,6 +33,9 @@ class TaskProvider extends ChangeNotifier {
 
   void addToTask(int priority) {
     tasks.add(TaskModel(
+      selectedPeriod: selectedPeriod,
+      selectedHour: selectedHour,
+      selectedMinute: selectedMinute,
       title: title ?? 'No Title',
       description: description ?? '',
       createdAt: DateTime.now(),

@@ -349,6 +349,7 @@ class CategoryChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 29,
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
       decoration: BoxDecoration(
         color: Color.fromRGBO(128, 156, 255, 1),
@@ -362,7 +363,7 @@ class CategoryChip extends StatelessWidget {
           Text(
             label,
             style: TextStyle(
-              color: color,
+              color: Color.fromRGBO(255, 255, 255, 1),
               fontSize: 11,
               fontWeight: FontWeight.w600,
             ),

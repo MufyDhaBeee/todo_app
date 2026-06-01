@@ -46,30 +46,137 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
           body: taskProvider.tasks.isNotEmpty
-
               ? Column(
                   children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset('assets/icons/search.svg'),
-                        SizedBox(width: 10),
-                        Text(
-                          'Search for your task...',
-                          style: TextStyle(
-                            color: Color.fromRGBO(175, 175, 175, 1),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          color: Color.fromRGBO(29, 29, 29, 1),
+                          border: Border.all(
+                            color: Color.fromRGBO(151, 151, 151, 1),
                           ),
                         ),
-                      ],
+                        child: Row(
+                          children: [
+                            SizedBox(width: 10),
+                            SvgPicture.asset(
+                              'assets/icons/search.svg',
+                              height: 24,
+                              width: 24,
+                            ),
+                            SizedBox(width: 10),
+                            Text(
+                              'Search for your task...',
+                              style: TextStyle(
+                                color: Color.fromRGBO(175, 175, 175, 1),
+                                fontSize: 16,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    ListView.builder(
+                    SizedBox(height: 20),
+                    ListView.separated(
                       shrinkWrap: true,
                       itemCount: taskProvider.tasks.length,
                       itemBuilder: (context, index) {
                         final task = taskProvider.tasks[index];
-                        return Card(color: Colors.white,child: ListTile(title: Text(task.title!)));
+                        return
+                        //Card(color: Colors.white,child: ListTile(title: Text(task.title!)));
+                        Padding(
+                          padding: const EdgeInsets.only(left: 12, right: 12),
+                          child: Container(
+                            height: 72,
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              color: Color.fromRGBO(54, 54, 54, 1),
+                            ),
+                            child: Row(
+                              children: [
+                                SizedBox(width: 10),
+                                AnimatedContainer(
+                                  duration: Duration(microseconds: 200),
+                                  width: 22,
+                                  height: 22,
+                                  decoration: BoxDecoration(
+                                    color: Color.fromRGBO(54, 54, 54, 1),
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: Color.fromRGBO(
+                                        255,
+                                        255,
+                                        255,
+                                        0.87,
+                                      ),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  alignment: Alignment.center,
+                                ),
+                                SizedBox(width: 14),
+                                // ---------------- Title + time ------------------------------------------------------>
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      SizedBox(height: 10),
+                                      Text(
+                                        task.title!,
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(
+                                            255,
+                                            255,
+                                            255,
+                                            0.87,
+                                          ),
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      SizedBox(height: 4),
+                                      Text(
+                                        task.endedDate == DateTime.now().day
+                                            ? 'Today At ${task.selectedHour}:${task.selectedMinute} ${task.selectedPeriod}'
+                                            : ' This ${task.endedDate} At ${task.selectedHour}:${task.selectedMinute}${task.selectedPeriod}',
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 14,
+                                          color: Color.fromRGBO(
+                                            175,
+                                            175,
+                                            175,
+                                            1,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(width: 8),
+                                //----------------CategoryChip--------------------------------------------------->
+                                CategoryChip(
+                                  label: 'University',
+                                  icon: Icons.school,
+                                  color: Color.fromRGBO(0, 85, 163, 1),
+                                ),
+                                SizedBox(width: 8),
+                                //--------------priority Badge----------------------------------------------------->
+                                PriorityBadge(priority: task.priority!),
+                                SizedBox(width: 10),
+                              ],
+                            ),
+                          ),
+                        );
                       },
+                      separatorBuilder: (context, index) =>
+                          SizedBox(height: 15),
                     ),
                   ],
                 )
@@ -107,120 +214,117 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-
         );
       },
     );
   }
 }
 
-
-
-
 void showAddTaskDialog(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: false, // User must tap a button to close
     builder: (BuildContext context) {
-      return ChangeNotifierProvider<TaskProvider>(
-        create: (_) => TaskProvider(),
-        builder: (context, child) {
-          return Consumer<TaskProvider>(
-            builder: (context, taskProvider, child) {
-                return Material(
-                  color: Colors.transparent,
-                  child: Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10, right: 10),
-                      child: Container(
-                        height: 280,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(54, 54, 54, 1),
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: SingleChildScrollView(
-                            child: Column(
-                              textDirection: TextDirection.ltr,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(height: 10),
-                                //---- Header-------------------------------------------------------------->>
-                                const Text(
-                                  ' Add Task',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(255, 255, 255, 0.87),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                                const SizedBox(height: 16),
-                                //---- Step 1: Title field  /  Step 2: Title as label -----------------------------------------------
-                                if (taskProvider.task_state ==
-                                    TaskStates.task_title) ...[
-                                  TaskTextField(
-                                    // controller: taskProvider.titleController,
-                                    focusNode: taskProvider.titleFocus,
-                                    hintText: 'Do math homework',
-                                    onSubmitted: (String value) {
-                                      print("the task is completed");
-                                      if (value.isNotEmpty) {
-                                        print("done task");
-                                        taskProvider.changeValueofTask(value);
-
-                                        taskProvider.changeCurrentStateOfTask(
-                                          TaskStates.task_description,
-                                        );
-
-                                        print(taskProvider.task_state);
-                                      }
-                                    },
-                                  ),
-                                  Text(
-                                    ' Description',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18,
-                                      color: Color.fromRGBO(175, 175, 175, 1),
-                                    ),
-                                  ),
-                                ] else if (taskProvider.task_state ==
-                                    TaskStates.task_description) ...[
-                                  Text(taskProvider.title!,style: TextStyle(color: Colors.white,fontSize: 18,fontWeight: FontWeight.w400),),
-                                  Text(
-                                    ' Description',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 18,
-                                      color: Color.fromRGBO(175, 175, 175, 1),
-                                    ),
-                                  ),
-                                  TaskTextField(
-                                    focusNode: taskProvider.descFocus,
-                                    hintText: 'Add A description',
-                                    onSubmitted: (value) {
-                                      taskProvider.changeValueofTask(value);
-                                    },
-                                  ),
-                                ],
-
-                                SizedBox(height: 20),
-
-                                SizedBox(height: 35),
-                                //---------ToolBar Icon---------------------------------------------------------------------------->
-                                ToolbarRow(),
-                              ],
+      return Consumer<TaskProvider>(
+        builder: (context, taskProvider, child) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Container(
+                  height: 280,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 54, 54, 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: SingleChildScrollView(
+                      child: Column(
+                        textDirection: TextDirection.ltr,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 10),
+                          //---- Header-------------------------------------------------------------->>
+                          const Text(
+                            ' Add Task',
+                            style: TextStyle(
+                              color: Color.fromRGBO(255, 255, 255, 0.87),
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
-                        ),
+                          const SizedBox(height: 16),
+                          //---- Step 1: Title field  /  Step 2: Title as label -----------------------------------------------
+                          if (taskProvider.task_state ==
+                              TaskStates.task_title) ...[
+                            TaskTextField(
+                              // controller: taskProvider.titleController,
+                              focusNode: taskProvider.titleFocus,
+                              hintText: 'Do math homework',
+                              onSubmitted: (String value) {
+                                print("the task is completed");
+                                if (value.isNotEmpty) {
+                                  print("done task");
+                                  taskProvider.changeValueofTask(value);
+
+                                  taskProvider.changeCurrentStateOfTask(
+                                    TaskStates.task_description,
+                                  );
+
+                                  print(taskProvider.task_state);
+                                }
+                              },
+                            ),
+                            Text(
+                              ' Description',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18,
+                                color: Color.fromRGBO(175, 175, 175, 1),
+                              ),
+                            ),
+                          ] else if (taskProvider.task_state ==
+                              TaskStates.task_description) ...[
+                            Text(
+                              taskProvider.title!,
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            Text(
+                              ' Description',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w400,
+                                fontSize: 18,
+                                color: Color.fromRGBO(175, 175, 175, 1),
+                              ),
+                            ),
+                            TaskTextField(
+                              focusNode: taskProvider.descFocus,
+                              hintText: 'Add A description',
+                              onSubmitted: (value) {
+                                taskProvider.changeValueofTask(value);
+                              },
+                            ),
+                          ],
+
+                          SizedBox(height: 20),
+
+                          SizedBox(height: 35),
+                          //---------ToolBar Icon---------------------------------------------------------------------------->
+                          ToolbarRow(),
+                        ],
                       ),
                     ),
                   ),
-                );
-
-            },
+                ),
+              ),
+            ),
           );
         },
       );
@@ -346,157 +450,152 @@ void showTaskPriorityDialog(BuildContext context) {
     context: context,
     barrierDismissible: false, // User must tap a button to close
     builder: (BuildContext context) {
-      return ChangeNotifierProvider<TaskProvider>(
-        create: (_) => TaskProvider(),
-        builder: (context, child) {
-          return Consumer<TaskProvider>(
-            builder: (context,taskProvider,child) {
-              return Material(
-                color: Colors.transparent,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: Container(
-                      height: 340,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(54, 54, 54, 1),
-                        borderRadius: BorderRadius.circular(4),
+      return Consumer<TaskProvider>(
+        builder: (context, taskProvider, child) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                child: Container(
+                  height: 340,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 54, 54, 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
+                    children: [
+                      //---- Header-------------------------------------------------------------->>
+                      const Text(
+                        ' Task Priority',
+                        style: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 0.87),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
-                      child: Column(
-                        children: [
-                          //---- Header-------------------------------------------------------------->>
-                          const Text(
-                            ' Task Priority',
-                            style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 0.87),
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          // //------------------------------------------------------------------------------------
-                          Divider(
-                            color: Color.fromRGBO(151, 151, 151, 1),
-                            thickness: 1,
-                            indent: 10,
-                            endIndent: 10,
-                          ),
-                          SizedBox(height: 10),
-                          SizedBox(
-                            height: 200,
-                            width: 280,
-                            child: GridView.builder(
-                              itemCount: 11,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 4,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10,
-                                  ),
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: (){
-                                    taskProvider.taskPrority=index;
-                                    print("this from priority side task adding function after ${taskProvider.taskPrority}");
-
-
-
-
-
-                                   taskProvider.addToTask(index);
-                                    Navigator.of(context).popUntil((route)=>route.isFirst);
-                                  },
-                                  child: Container(
-                                    width: 64,
-                                    height: 64,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(4),
-                                      color: Color.fromRGBO(39, 39, 39, 1),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(top: 10),
-                                      child: Column(
-                                        children: [
-                                          SvgPicture.asset('assets/icons/flag.svg'),
-                                          Text(
-                                            index.toString(),
-                                            style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                255,
-                                                255,
-                                                255,
-                                                0.87,
-                                              ),
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                      SizedBox(height: 5),
+                      // //------------------------------------------------------------------------------------
+                      Divider(
+                        color: Color.fromRGBO(151, 151, 151, 1),
+                        thickness: 1,
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                      SizedBox(height: 10),
+                      SizedBox(
+                        height: 200,
+                        width: 280,
+                        child: GridView.builder(
+                          itemCount: 11,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 4,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                              ),
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                taskProvider.taskPrority = index;
+                                print(
+                                  "this from priority side task adding function after ${taskProvider.taskPrority}",
                                 );
+
+                                taskProvider.addToTask(index);
+                                Navigator.of(
+                                  context,
+                                ).popUntil((route) => route.isFirst);
                               },
-                            ),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                  },
-                                  child: Container(
-                                    height: 53,
-                                    width: 150,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromRGBO(54, 54, 54, 1),
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Cancel',
+                              child: Container(
+                                width: 64,
+                                height: 64,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(4),
+                                  color: Color.fromRGBO(39, 39, 39, 1),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Column(
+                                    children: [
+                                      SvgPicture.asset('assets/icons/flag.svg'),
+                                      Text(
+                                        index.toString(),
                                         style: TextStyle(
-                                          color: Color.fromRGBO(134, 135, 231, 1),
-                                          fontWeight: FontWeight.w400,
+                                          color: Color.fromRGBO(
+                                            255,
+                                            255,
+                                            255,
+                                            0.87,
+                                          ),
                                           fontSize: 16,
+                                          fontWeight: FontWeight.w400,
                                         ),
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
-                                SizedBox(width: 15),
-                                Container(
-                                  height: 53,
-                                  width: 150,
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(134, 135, 231, 1),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Edit',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                              ),
+                            );
+                          },
+                        ),
                       ),
-                    ),
+                      SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, right: 15),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 53,
+                                width: 150,
+                                decoration: BoxDecoration(
+                                  color: Color.fromRGBO(54, 54, 54, 1),
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Cancel',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(134, 135, 231, 1),
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(width: 15),
+                            Container(
+                              height: 53,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(134, 135, 231, 1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Edit',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 1),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              );
-            }
+              ),
+            ),
           );
         },
       );
@@ -612,141 +711,140 @@ void showCalenderDialog(BuildContext context) {
     context: context,
     barrierDismissible: false, // User must tap a button to close
     builder: (BuildContext context) {
-      return ChangeNotifierProvider<TaskProvider>(
-        create: (_) => TaskProvider(),
-        builder: (context, child) {
-          return Consumer<TaskProvider>(
-            builder: (context,taskProvider,child) {
-              return Material(
-                color: Colors.transparent,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15, right: 15),
-                    child: Container(
-                      height: 475,
-                      width: 327,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(54, 54, 54, 1),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: Column(
-                        children: [
-                          //---- Header-------------------------------------------------------------->>\
-                          DatePickerTheme(
-                            data: DatePickerThemeData(
-                              headerHelpStyle: TextStyle(color: Colors.red),
-                              backgroundColor: Color(0xff363636),
-                              headerBackgroundColor: Colors.white,
-                              headerForegroundColor: Colors.white,
-                              dayBackgroundColor: WidgetStatePropertyAll(
-                                Color.fromRGBO(39, 39, 39, 1),
+      return Consumer<TaskProvider>(
+        builder: (context, taskProvider, child) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Container(
+                  height: 475,
+                  width: 327,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 54, 54, 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
+                    children: [
+                      //---- Header-------------------------------------------------------------->>\
+                      DatePickerTheme(
+                        data: DatePickerThemeData(
+                          headerHelpStyle: TextStyle(color: Colors.red),
+                          backgroundColor: Color(0xff363636),
+                          headerBackgroundColor: Colors.white,
+                          headerForegroundColor: Colors.white,
+                          dayBackgroundColor: WidgetStatePropertyAll(
+                            Color.fromRGBO(39, 39, 39, 1),
+                          ),
+                          dayShape: WidgetStatePropertyAll<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(6),
                               ),
-                              dayShape: WidgetStatePropertyAll<OutlinedBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(6),
-                                  ),
-                                ),
-                              ),
-                              dayForegroundColor: WidgetStatePropertyAll<Color>(
-                                Colors.white,
-                              ),
-                              dayStyle: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 12,
-                                color: Color.fromRGBO(255, 255, 255, 0.87),
-                              ),
-                              weekdayStyle: TextStyle(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 10,
-                                color: Color.fromRGBO(255, 255, 255, 0.87),
-                              ),
-
-                              ///---YearStyle-----------------------------
-                              yearBackgroundColor: WidgetStatePropertyAll<Color>(
-                                Colors.white,
-                              ),
-                              yearStyle: TextStyle(
-                                color: Color.fromRGBO(255, 255, 255, 0.87),
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                              ),
-                            ),
-                            child: CalendarDatePicker(
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime.now(),
-                              lastDate: DateTime(2027),
-                              onDateChanged: (datetime) {
-                             taskProvider.dateTime=datetime.day;
-                             print("this from calendar state of task ${taskProvider.dateTime} selected datetime is ${datetime.day}");
-                              },
                             ),
                           ),
-                          SizedBox(height: 30),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  height: 48,
-                                  width: 153,
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(54, 54, 54, 1),
+                          dayForegroundColor: WidgetStatePropertyAll<Color>(
+                            Colors.white,
+                          ),
+                          dayStyle: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 12,
+                            color: Color.fromRGBO(255, 255, 255, 0.87),
+                          ),
+                          weekdayStyle: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 10,
+                            color: Color.fromRGBO(255, 255, 255, 0.87),
+                          ),
 
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Cancel',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(134, 135, 231, 1),
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                          ///---YearStyle-----------------------------
+                          yearBackgroundColor: WidgetStatePropertyAll<Color>(
+                            Colors.white,
+                          ),
+                          yearStyle: TextStyle(
+                            color: Color.fromRGBO(255, 255, 255, 0.87),
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                          ),
+                        ),
+                        child: CalendarDatePicker(
+                          initialDate: DateTime.now(),
+                          firstDate: DateTime.now(),
+                          lastDate: DateTime(2027),
+                          onDateChanged: (datetime) {
+                            taskProvider.dateTime = datetime.day;
+                            print(
+                              "this from calendar state of task ${taskProvider.dateTime} selected datetime is ${datetime.day}",
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 30),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 153,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(54, 54, 54, 1),
+
+                                borderRadius: BorderRadius.circular(4),
                               ),
-                              SizedBox(width: 10),
-                              InkWell(
-                                onTap: () {
-                                if(taskProvider.dateTime==0){
-                                  taskProvider.dateTime=DateTime.now().day;
-                                }
-                                  print("this from calendar state of task ${taskProvider.dateTime} ");
-                                  showTimerDialog(context);
-                                },
-                                child: Container(
-                                  height: 48,
-                                  width: 153,
-                                  decoration: BoxDecoration(
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
                                     color: Color.fromRGBO(134, 135, 231, 1),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Choose Time',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ),
-                            ],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              if (taskProvider.dateTime == 0) {
+                                taskProvider.dateTime = DateTime.now().day;
+                              }
+                              print(
+                                "this from calendar state of task ${taskProvider.dateTime} ",
+                              );
+                              showTimerDialog(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 153,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(134, 135, 231, 1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Choose Time',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 1),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              );
-            }
+              ),
+            ),
           );
         },
       );
@@ -757,149 +855,147 @@ void showCalenderDialog(BuildContext context) {
 ///--------------------------Timer------------------------------------------------------------->>
 ///
 
-void  showTimerDialog(BuildContext context) {
-
+void showTimerDialog(BuildContext context) {
   showDialog(
     context: context,
     barrierDismissible: false, // User must tap a button to close
     builder: (BuildContext context) {
-      return ChangeNotifierProvider<TaskProvider>(
-        create: (_) => TaskProvider(),
-        builder: (context, child) {
-          return Consumer<TaskProvider>(
-            builder: (context,taskProvider,child) {
-              return Material(
-                color: Colors.transparent,
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 15, right: 15),
-                    child: Container(
-                      height: 250,
-                      width: 327,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(54, 54, 54, 1),
-                        borderRadius: BorderRadius.circular(4),
+      return Consumer<TaskProvider>(
+        builder: (context, taskProvider, child) {
+          return Material(
+            color: Colors.transparent,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Container(
+                  height: 250,
+                  width: 327,
+                  decoration: BoxDecoration(
+                    color: Color.fromRGBO(54, 54, 54, 1),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 10),
+                      //---- Header-------------------------------------------------------------->>
+                      Text(
+                        'Choose Time',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                          color: Color.fromRGBO(255, 255, 255, 0.87),
+                        ),
                       ),
-                      child: Column(
+                      SizedBox(height: 8),
+                      Divider(
+                        thickness: 1.5,
+                        color: Color.fromRGBO(151, 151, 151, 1),
+                        indent: 10,
+                        endIndent: 10,
+                      ),
+                      SizedBox(height: 10),
+                      //---Scrollable Picker Row----------------------------------------------------------------------->
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            buildScrollTimer(
+                              currentValue: taskProvider.selectedHour,
+                              itemCount: 12,
+                              offSet: 1,
+                              onChanged: (val) =>
+                                  taskProvider.selectedHour = val + 1,
+                            ),
+                            SizedBox(width: 15),
+                            Text(
+                              ':',
+                              style: TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 0.87),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            SizedBox(width: 15),
+                            buildScrollTimer(
+                              currentValue: taskProvider.selectedMinute,
+                              itemCount: 60,
+                              onChanged: (val) =>
+                                  taskProvider.selectedMinute = val,
+                              offSet: 0,
+                            ),
+                            SizedBox(width: 15),
+                            buildScrollTimer(
+                              currentValue: taskProvider.selectedPeriod == 'AM'
+                                  ? 0
+                                  : 1,
+                              itemCount: 2,
+                              isPeriod: true,
+                              onChanged: (val) => taskProvider.selectedPeriod =
+                                  val == 0 ? 'AM' : 'PM',
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 25),
+                      //------------Action Button---------------------------------->>
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(height: 10),
-                          //---- Header-------------------------------------------------------------->>
-                          Text(
-                            'Choose Time',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(255, 255, 255, 0.87),
-                            ),
-                          ),
-                          SizedBox(height: 8),
-                          Divider(
-                            thickness: 1.5,
-                            color: Color.fromRGBO(151, 151, 151, 1),
-                            indent: 10,
-                            endIndent: 10,
-                          ),
-                          SizedBox(height: 10),
-                          //---Scrollable Picker Row----------------------------------------------------------------------->
-                          Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                buildScrollTimer(
-                                  currentValue: taskProvider.selectedHour,
-                                  itemCount: 12,
-                                  offSet: 1,
-                                  onChanged: (val) => taskProvider.selectedHour = val + 1,
-                                ),
-                                SizedBox(width: 15),
-                                Text(
-                                  ':',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(255, 255, 255, 0.87),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                SizedBox(width: 15),
-                                buildScrollTimer(
-                                  currentValue: taskProvider.selectedMinute,
-                                  itemCount: 60,
-                                  onChanged: (val) => taskProvider.selectedMinute = val,
-                                  offSet: 0,
-                                ),
-                                SizedBox(width: 15),
-                                buildScrollTimer(
-                                  currentValue: taskProvider.selectedPeriod == 'AM' ? 0 : 1,
-                                  itemCount: 2,
-                                  isPeriod: true,
-                                  onChanged: (val) =>
-                                      taskProvider.selectedPeriod = val == 0 ? 'AM' : 'PM',
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 25),
-                          //------------Action Button---------------------------------->>
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              InkWell(
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                                child: Container(
-                                  height: 48,
-                                  width: 153,
-                                  decoration: BoxDecoration(
-                                    color: Color.fromRGBO(54, 54, 54, 1),
+                          InkWell(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 153,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(54, 54, 54, 1),
 
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Cancel',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(134, 135, 231, 1),
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                borderRadius: BorderRadius.circular(4),
                               ),
-                              SizedBox(width: 10),
-                              InkWell(
-                                onTap: () {
-                                  showTaskPriorityDialog(context);
-                                },
-                                child: Container(
-                                  height: 48,
-                                  width: 153,
-                                  decoration: BoxDecoration(
+                              child: Center(
+                                child: Text(
+                                  'Cancel',
+                                  style: TextStyle(
                                     color: Color.fromRGBO(134, 135, 231, 1),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Center(
-                                    child: Text(
-                                      'Save',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w400,
-                                      ),
-                                    ),
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 16,
                                   ),
                                 ),
                               ),
-                            ],
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          InkWell(
+                            onTap: () {
+                              showTaskPriorityDialog(context);
+                            },
+                            child: Container(
+                              height: 48,
+                              width: 153,
+                              decoration: BoxDecoration(
+                                color: Color.fromRGBO(134, 135, 231, 1),
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                              child: Center(
+                                child: Text(
+                                  'Save',
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 1),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    ),
+                    ],
                   ),
                 ),
-              );
-            }
+              ),
+            ),
           );
         },
       );
